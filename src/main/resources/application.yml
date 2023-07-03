@@ -1,0 +1,41 @@
+spring:
+  author: Dcl_Snow
+  profiles:
+    # 使用dev开发环境
+    active: dev
+
+  # 配置Jpa
+  jpa:
+    # 开启SQL打印（建议开发环境）
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        # 开启SQL格式化
+        format_sql: true
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      fail-on-empty-beans: false
+
+# jwt的配置
+jwt:
+  # 签名加盐
+  secret: Snow_Admin_TwentyTwentyOneNovemberTwentyTwo
+  # jwt过期时间
+  expiration: 1800
+  # token头部
+  tokenHead: 'Bearer '
+
+# 微信小程序
+mini:
+  # 密钥
+  appId: "*************************"
+  secret: "****************************"

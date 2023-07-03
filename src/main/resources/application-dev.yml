@@ -1,0 +1,71 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/snow-admin?autoReconnect=true&characterEncoding=utf8&useUnicode=true&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai
+      username: root
+      password: tZ9TkCWhUui0aodT8J3y+Z5oK8hnVU54opXM8JMnjn44EfqkgcsJmJn4LXetWQIfrKjLgPYzECxYAjKBVuDQPA==
+      #配置初始化连接数
+      initial-size: 5
+      #最小空闲连接
+      min-idle: 5
+      #最大连接数量
+      max-active: 20
+      #获取连接超时的时间
+      max-wait:  60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 600000
+      #配置一个连接在池中最大生存的时间，单位是毫秒
+      max-evictable-idle-time-millis: 1800000
+      # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除,建议配置为true，不影响性能，并且保证安全性。
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-while-idle: true
+      # （慎用：配置为true会降低性能）申请连接时执行validationQuery检测连接是否有效，若无效则从池中去除连接并尝试取出另一个。
+      test-on-borrow: true
+      # （慎用：配置为true会降低性能）归还连接时执行validationQuery检测连接是否有效。
+      test-on-return: false
+      # 检测连接是否有效
+      validation-query: select 1
+      stat-view-servlet:
+        # 开启监控页面功能
+        enabled: true
+        # 定义访问监控页面路径，默认为/druid
+        url-pattern: /druid/*
+        # 设置访问页面用户和密码
+        login-username: admin
+        login-password: admin
+        # 访问页面可以将统计数据重置清零，设为false关闭重置
+        reset-enable: false
+      filter:
+        wall:
+          # 开启防SQL注入
+          enabled: true
+          # 按照官方建议，项目最初可以对log-violation和throw-exception最如下配置，不影响项目运行使用，又可以查看SQL违规情况，稳定后去掉使用默认
+          # 对被认为是攻击的SQL进行LOG.error输出
+          log-violation: true
+          # 对被认为是攻击的SQL不抛出异常
+          throw-exception: false
+        stat:
+          # 开启统计监控信息
+          enabled: true
+          # 记录慢SQL
+          log-slow-sql: true
+          # SQL执行超过1秒即判为慢SQL
+          slow-sql-millis: 1000
+          # 合并SQL
+          merge-sql: true
+      # 定期保存Druid的监控记录到日志文件（设置该项>0，即开启该功能）
+      time-between-log-stats-millis: 300000
+      filters: config
+      connection-properties: config.decrypt=true;config.decrypt.key=${public-key}
+
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    timeout: 6000
+
+public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL+74WvpIBmre97Od+Jci6cPpws2JMAP49igX7dkOP4ZwVjsvUsWUf1DoQs8JOu0ZTiUOJ8HGpDGG4KwBYBcPgkCAwEAAQ==
