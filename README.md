@@ -1,0 +1,2 @@
+# Snow_Admin
+Snow_Admin是使用SpringBoot开发的后台管理系统，基于Spring Security实现的RBAC权限控制，是记录逐步开发实现所有功能的项目，随着时间后续会扩展整合其他技术栈。
