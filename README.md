@@ -31,10 +31,10 @@ Snow_Admin是使用SpringBoot开发的后台管理系统，基于Spring Security
 单体结构，随着开发进度进化
 
 ## 7.数据库表
-
+在项目sql目录
 ## 8.本地部署
 
-1.git clone https://gitee.com/Dcl_Snow/Snow_Admin.git 将项目代码克隆到本地。
+1.将项目代码克隆到本地。
 
 2.MySQL数据库中创建数据库snow-admin，然后导入项目sql目录下的snow-admin.sql文件。
 
