@@ -61,7 +61,7 @@ public class JwtUtil {
     public Long getUserIdByToken(String token) {
         Claims claims = this.getTokenBody(token);
         if (null != claims) {
-            return (Long) claims.get("userId");
+            return Long.parseLong(claims.get("userId").toString());
         } else {
             throw new CustomException("Token无效！");
         }
