@@ -6,6 +6,7 @@
  */
 package com.snow.dcl.controller;
 
+import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.vo.SysUserVo;
 import com.snow.dcl.service.SysUserService;
@@ -15,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,7 @@ public class SysUserController {
     @Resource
     SysUserService sysUserService;
 
+    @SysOperateLog("新增用户")
     @ApiOperation(value = "新增用户")
     @PostMapping("/save")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysUserVo sysUserVo) {
@@ -46,6 +47,7 @@ public class SysUserController {
         return ResponseResult.success().message("新增用户成功");
     }
 
+    @SysOperateLog("根据id删除用户")
     @ApiOperation(value = "根据id删除用户")
     @DeleteMapping("/{userId}")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long userId) {
@@ -53,6 +55,7 @@ public class SysUserController {
         return ResponseResult.success().message("删除用户成功");
     }
 
+    @SysOperateLog("批量删除用户")
     @ApiOperation(value = "批量删除用户")
     @DeleteMapping("/")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> userIds) {
@@ -60,6 +63,7 @@ public class SysUserController {
         return ResponseResult.success().message("批量删除成功");
     }
 
+    @SysOperateLog("更新用户")
     @ApiOperation(value = "更新用户")
     @PutMapping("/update")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysUserVo sysUserVo) {
@@ -88,7 +92,8 @@ public class SysUserController {
         return ResponseResult.success().data(hashMap);
     }
 
-    @ApiOperation(value = "更新状态")
+    @SysOperateLog("更新用户状态")
+    @ApiOperation(value = "更新用户状态")
     @GetMapping("/updateStatus/{id}/{status}")
     public ResponseResult updateStatus(@PathVariable Long id, @PathVariable Short status) {
         sysUserService.updateStatus(id, status);

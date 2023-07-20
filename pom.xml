@@ -23,6 +23,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <captcha.version>1.6.2</captcha.version>
         <ehcache.version>2.10.2</ehcache.version>
+        <yauaa.version>7.19.1</yauaa.version>
     </properties>
     <dependencies>
         <dependency>
@@ -115,18 +116,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- Springboot开启缓存 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-cache</artifactId>-->
-<!--        </dependency>-->
-        <!-- 引入Ehcache依赖 -->
-<!--        <dependency>-->
-<!--            <groupId>net.sf.ehcache</groupId>-->
-<!--            <artifactId>ehcache</artifactId>-->
-<!--            <version>${ehcache.version}</version>-->
-<!--        </dependency>-->
-
+        <!-- ip2region IP库，根据IP解析地址 -->
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-ip2region</artifactId>
+            <version>2.6.3</version>
+        </dependency>
     </dependencies>
 
     <build>

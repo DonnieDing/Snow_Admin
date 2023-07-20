@@ -6,6 +6,7 @@
  */
 package com.snow.dcl.controller;
 
+import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.vo.LoginVo;
 import com.snow.dcl.service.LoginService;
@@ -35,6 +36,7 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    @SysOperateLog("用户登录")
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
     public ResponseResult login(@RequestBody LoginVo loginVo) {
@@ -53,6 +55,7 @@ public class LoginController {
         return ResponseResult.success().message("获取用户信息成功！").data(sysUser);
     }
 
+    @SysOperateLog("用户登出")
     @ApiOperation(value = "用户登出")
     @GetMapping("/logout")
     public ResponseResult logout() {

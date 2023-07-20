@@ -6,6 +6,7 @@
  */
 package com.snow.dcl.controller;
 
+import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.vo.AssignRoleVo;
 import com.snow.dcl.model.vo.SysRoleVo;
@@ -40,6 +41,7 @@ public class SysRoleController {
     @Resource
     SysRoleService sysRoleService;
 
+    @SysOperateLog("新增角色")
     @ApiOperation(value = "新增角色")
     @PostMapping("/save")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
@@ -47,6 +49,7 @@ public class SysRoleController {
         return ResponseResult.success().message("新增角色成功");
     }
 
+    @SysOperateLog("更新角色")
     @ApiOperation(value = "更新角色")
     @PostMapping("/update")
     public ResponseResult update(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
@@ -58,6 +61,7 @@ public class SysRoleController {
         return ResponseResult.success().message("修改角色成功");
     }
 
+    @SysOperateLog("删除角色")
     @ApiOperation(value = "删除角色")
     @DeleteMapping("/{roleId}")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long roleId) {
@@ -65,6 +69,7 @@ public class SysRoleController {
         return ResponseResult.success().message("删除角色成功");
     }
 
+    @SysOperateLog("批量删除角色")
     @ApiOperation(value = "批量删除角色")
     @DeleteMapping("/")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> roleIds) {
@@ -102,6 +107,7 @@ public class SysRoleController {
         return ResponseResult.success().data(roleMap);
     }
 
+    @SysOperateLog("根据用户分配角色")
     @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
     public ResponseResult doAssign(@RequestBody AssignRoleVo assignRoleVo) {

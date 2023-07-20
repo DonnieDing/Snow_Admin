@@ -6,6 +6,7 @@
  */
 package com.snow.dcl.controller;
 
+import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
@@ -35,6 +36,7 @@ public class SysPermissionController {
     @Resource
     SysPermissionService sysPermissionService;
 
+    @SysOperateLog("新增权限")
     @ApiOperation(value = "新增权限")
     @PostMapping("/permission")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionVo sysPermissionVo) {
@@ -42,6 +44,7 @@ public class SysPermissionController {
         return ResponseResult.success().message("新增权限成功");
     }
 
+    @SysOperateLog("删除权限")
     @ApiOperation(value = "删除权限")
     @DeleteMapping("/permission/{permissionId}")
     public ResponseResult delete(@PathVariable Long permissionId) {
@@ -49,6 +52,7 @@ public class SysPermissionController {
         return ResponseResult.success().message("删除权限成功");
     }
 
+    @SysOperateLog("更新权限")
     @ApiOperation(value = "更新权限")
     @PutMapping("/permission")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionVo permissionVo) {

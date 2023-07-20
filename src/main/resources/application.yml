@@ -30,7 +30,7 @@ jwt:
   # 签名加盐
   secret: Snow_Admin_TwentyTwentyOneNovemberTwentyTwo
   # jwt过期时间
-  expiration: 1800
+  expiration: 18000
   # token头部
   tokenHead: 'Bearer '
 

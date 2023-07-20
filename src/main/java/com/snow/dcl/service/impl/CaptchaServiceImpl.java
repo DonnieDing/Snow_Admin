@@ -1,14 +1,12 @@
 package com.snow.dcl.service.impl;
 
 import com.snow.dcl.constant.CacheKeyConstant;
-import com.snow.dcl.constant.CacheNameConstant;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.service.CaptchaService;
 import com.snow.dcl.utils.RedisUtils;
-import com.wf.captcha.GifCaptcha;
+import com.wf.captcha.ArithmeticCaptcha;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.Cache;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -38,12 +36,22 @@ public class CaptchaServiceImpl implements CaptchaService {
     public Map<String, String> getCaptcha() {
 
         //gif字符类型
-        GifCaptcha captcha = new GifCaptcha();
-        captcha.setLen(5);
+        // GifCaptcha captcha = new GifCaptcha();
+        // captcha.setLen(5);
+        //
+        // String captchaText = captcha.text();
+        // log.info("图形验证码：{}", captchaText);
 
+        // 算术类型
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(130, 48);
+        // 几位数运算，默认是两位
+        captcha.setLen(2);
+        // 获取运算的公式：3+2=?
+        captcha.getArithmeticString();
+        // 获取运算的结果：5
         String captchaText = captcha.text();
-        log.info("图形验证码：{}", captchaText);
 
+        log.info("图形验证码：{}", captchaText);
         //存入Redis
         String codeKey = CacheKeyConstant.CAPTCHA_CODE + ":" + UUID.randomUUID();
         redisUtils.setValueTime(codeKey, captchaText, 30);

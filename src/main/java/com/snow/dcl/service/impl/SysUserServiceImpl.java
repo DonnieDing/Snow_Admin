@@ -8,7 +8,6 @@ package com.snow.dcl.service.impl;
 
 import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
-import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.vo.SysUserVo;
 import com.snow.dcl.service.SysUserService;
