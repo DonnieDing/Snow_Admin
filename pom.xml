@@ -22,8 +22,6 @@
         <hutool.version>5.3.4</hutool.version>
         <jjwt.version>0.9.1</jjwt.version>
         <captcha.version>1.6.2</captcha.version>
-        <ehcache.version>2.10.2</ehcache.version>
-        <yauaa.version>7.19.1</yauaa.version>
     </properties>
     <dependencies>
         <dependency>
