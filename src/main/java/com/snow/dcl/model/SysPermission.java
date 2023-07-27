@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName SysPermission
@@ -50,7 +51,7 @@ public class SysPermission implements Serializable {
 
     private String icon;
 
-    private Boolean status = true;
+    private Integer status;
 
     private Boolean isDeleted = false;
 
@@ -61,5 +62,14 @@ public class SysPermission implements Serializable {
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
+    @Transient
+    private Integer level;
+
+    @Transient
+    private List<SysPermission> children;
+
+    @Transient
+    private boolean isSelect;
 
 }

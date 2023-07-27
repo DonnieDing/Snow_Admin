@@ -18,7 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName SysPermissionController
@@ -63,9 +63,8 @@ public class SysPermissionController {
     @ApiOperation(value = "查询所有权限")
     @GetMapping("/permission")
     public ResponseResult findAll() {
-        List<SysPermission> permissionAll = sysPermissionService.findAll();
+        Set<SysPermission> permissionAll = sysPermissionService.findAll();
         return ResponseResult.success().data(permissionAll);
     }
-
 
 }

@@ -24,8 +24,6 @@ import java.net.UnknownHostException;
 @Slf4j
 public class SysLogUtils {
 
-    private static final String UNKNOWN = "unknown";
-
     public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp?ip=%s&json=true";
 
     private static Ip2regionSearcher IP_SEARCHER = (Ip2regionSearcher) SpringBeanUtil.getBean("ip2regionSearcher");

@@ -9,7 +9,7 @@ package com.snow.dcl.service;
 import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.vo.SysPermissionVo;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName SysPermissionService
@@ -25,5 +25,5 @@ public interface SysPermissionService {
 
     void delete(Long permissionId);
 
-    List<SysPermission> findAll();
+    Set<SysPermission> findAll();
 }

@@ -10,6 +10,7 @@ import com.snow.dcl.dao.SysPermissionRepository;
 import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
+import com.snow.dcl.utils.MenuHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -17,6 +18,8 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName SysPermissionService
@@ -65,7 +68,9 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     }
 
     @Override
-    public List<SysPermission> findAll() {
-        return sysPermissionRepository.findAll();
+    public Set<SysPermission> findAll() {
+        List<SysPermission> allPermissions = sysPermissionRepository.findAll();
+        Set<SysPermission> permissionSet = allPermissions.stream().collect(Collectors.toSet());
+        return MenuHelper.buildTree(permissionSet);
     }
 }
