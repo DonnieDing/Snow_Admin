@@ -7,7 +7,9 @@
 package com.snow.dcl.service.impl;
 
 import com.snow.dcl.dao.SysPermissionRepository;
+import com.snow.dcl.dao.SysRoleRepository;
 import com.snow.dcl.model.SysPermission;
+import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.MenuHelper;
@@ -18,6 +20,7 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,10 @@ import java.util.stream.Collectors;
 public class SysPermissionServiceImpl implements SysPermissionService {
 
     @Resource
-    SysPermissionRepository sysPermissionRepository;
+    private SysPermissionRepository sysPermissionRepository;
+
+    @Resource
+    private SysRoleRepository sysRoleRepository;
 
     @Override
     public void save(SysPermissionVo sysPermissionVo) {
@@ -72,5 +78,31 @@ public class SysPermissionServiceImpl implements SysPermissionService {
         List<SysPermission> allPermissions = sysPermissionRepository.findAll();
         Set<SysPermission> permissionSet = allPermissions.stream().collect(Collectors.toSet());
         return MenuHelper.buildTree(permissionSet);
+    }
+
+    /**
+     * 根据角色查询树形权限
+     */
+    @Override
+    public Set<SysPermission> selectPermissionByRole(Long roleId) {
+        // 1.查询系统所有权限
+        List<SysPermission> allSysPermissionList = sysPermissionRepository.findAll();
+        Set<SysPermission> allSysPermissionSet = allSysPermissionList.stream().collect(Collectors.toSet());
+        // 2.根据角色id查询角色的权限
+        Set<SysPermission> sysPermissionSet = null;
+        Optional<SysRole> oSysRole = sysRoleRepository.findById(roleId);
+        if (oSysRole.isPresent()) {
+            sysPermissionSet = oSysRole.get().getPermissionSet();
+        }
+        List<Long> rolePermissionIds = sysPermissionSet.stream().map(p -> p.getId()).collect(Collectors.toList());
+        for (SysPermission sysPermission : allSysPermissionList) {
+            if (rolePermissionIds.contains(sysPermission.getId())) {
+                sysPermission.setSelect(true);
+            } else {
+                sysPermission.setSelect(false);
+            }
+        }
+        Set<SysPermission> permissionList = MenuHelper.buildTree(allSysPermissionSet);
+        return permissionList;
     }
 }

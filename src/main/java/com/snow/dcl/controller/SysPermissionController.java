@@ -67,4 +67,11 @@ public class SysPermissionController {
         return ResponseResult.success().data(permissionAll);
     }
 
+    @ApiOperation(value = "根据角色获取权限")
+    @GetMapping("/permission/toAssign/{roleId}")
+    public ResponseResult selectPermissionByRole(@PathVariable Long roleId) {
+        Set<SysPermission> menuList = sysPermissionService.selectPermissionByRole(roleId);
+        return ResponseResult.success().data(menuList);
+    }
+
 }

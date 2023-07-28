@@ -27,7 +27,7 @@ public class MenuHelper {
     }
 
     private static SysPermission selectChildren(SysPermission permissionNode, Set<SysPermission> permissionList) {
-        // permissionNode.setChildren(new ArrayList<>());
+        permissionNode.setChildren(new ArrayList<>());
         for (SysPermission aclPermission : permissionList) {
             if (aclPermission.getPid().equals(permissionNode.getId())) {
                 aclPermission.setLevel(permissionNode.getLevel() + 1);

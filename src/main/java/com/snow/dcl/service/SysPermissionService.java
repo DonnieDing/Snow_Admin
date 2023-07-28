@@ -26,4 +26,6 @@ public interface SysPermissionService {
     void delete(Long permissionId);
 
     Set<SysPermission> findAll();
+
+    Set<SysPermission> selectPermissionByRole(Long roleId);
 }
