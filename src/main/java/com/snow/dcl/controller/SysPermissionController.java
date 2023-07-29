@@ -8,6 +8,7 @@ package com.snow.dcl.controller;
 
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysPermission;
+import com.snow.dcl.model.vo.AssignPermissionVo;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.ResponseResult;
@@ -74,4 +75,10 @@ public class SysPermissionController {
         return ResponseResult.success().data(menuList);
     }
 
+    @ApiOperation(value = "根据角色分配权限")
+    @PostMapping("/permission/doAssign")
+    public ResponseResult doAssign(@RequestBody AssignPermissionVo assignPermissionVo) {
+        sysPermissionService.doAssign(assignPermissionVo);
+        return ResponseResult.success();
+    }
 }

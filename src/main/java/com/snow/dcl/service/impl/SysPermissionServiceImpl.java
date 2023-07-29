@@ -7,14 +7,18 @@
 package com.snow.dcl.service.impl;
 
 import com.snow.dcl.dao.SysPermissionRepository;
+import com.snow.dcl.dao.SysRolePermissionRepository;
 import com.snow.dcl.dao.SysRoleRepository;
 import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.SysRole;
+import com.snow.dcl.model.SysRolePermission;
+import com.snow.dcl.model.vo.AssignPermissionVo;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.MenuHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -40,6 +44,9 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     @Resource
     private SysRoleRepository sysRoleRepository;
+
+    @Resource
+    private SysRolePermissionRepository sysRolePermissionRepository;
 
     @Override
     public void save(SysPermissionVo sysPermissionVo) {
@@ -104,5 +111,21 @@ public class SysPermissionServiceImpl implements SysPermissionService {
         }
         Set<SysPermission> permissionList = MenuHelper.buildTree(allSysPermissionSet);
         return permissionList;
+    }
+
+    @Override
+    @Transactional
+    public void doAssign(AssignPermissionVo assignPermissionVo) {
+        Long roleId = assignPermissionVo.getRoleId();
+        // 根据角色id删除权限
+        sysRolePermissionRepository.deleteByRoleId(roleId);
+        // 遍历权限id列表，添加权限
+        List<Long> permissionIdList = assignPermissionVo.getPermissionIdList();
+        for (Long permissionId : permissionIdList) {
+            SysRolePermission sysRolePermission = new SysRolePermission();
+            sysRolePermission.setRoleId(roleId);
+            sysRolePermission.setPermissionId(permissionId);
+            sysRolePermissionRepository.save(sysRolePermission);
+        }
     }
 }
