@@ -6,16 +6,23 @@ import cn.hutool.json.JSONUtil;
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.dao.SysLogRepository;
 import com.snow.dcl.model.SysLog;
+import com.snow.dcl.model.SysRole;
 import com.snow.dcl.service.SysLogService;
 import com.snow.dcl.utils.SysLogUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.Predicate;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
@@ -55,7 +62,7 @@ public class SysLogServiceImpl implements SysLogService {
         sysLog.setUsername(username);
         sysLog.setParams(getParameter(method, joinPoint.getArgs()));
         // 记录登录用户，隐藏密码信息
-        if(signature.getName().equals("login") && StringUtils.hasText(sysLog.getParams())){
+        if (signature.getName().equals("login") && StringUtils.hasText(sysLog.getParams())) {
             JSONObject obj = JSONUtil.parseObj(sysLog.getParams());
             sysLog.setUsername(obj.getStr("username", ""));
             sysLog.setParams(JSONUtil.toJsonStr(Dict.create().set("username", sysLog.getUsername())));
@@ -92,5 +99,27 @@ public class SysLogServiceImpl implements SysLogService {
             return "";
         }
         return argList.size() == 1 ? JSONUtil.toJsonStr(argList.get(0)) : JSONUtil.toJsonStr(argList);
+    }
+
+    @Override
+    public Page<SysLog> findAll(SysLog sysLog, Integer page, Integer size) {
+        // 1.动态拼接查询条件
+        Specification<SysLog> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (!ObjectUtils.isEmpty(sysLog.getLogType())) {
+                list.add(criteriaBuilder.like(root.get("logType").as(String.class), "%" + sysLog.getLogType()));
+            }
+            return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+        };
+        // 2.构造分页
+        Pageable pageable = PageRequest.of(page - 1, size);
+        // 3.查询数据并返回
+        Page<SysLog> pageLog = sysLogRepository.findAll(specification, pageable);
+        return pageLog;
+    }
+
+    @Override
+    public SysLog findById(Long id) {
+        return sysLogRepository.findById(id).orElse(new SysLog());
     }
 }
