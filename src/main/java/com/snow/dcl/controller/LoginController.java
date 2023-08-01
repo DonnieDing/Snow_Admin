@@ -10,6 +10,7 @@ import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.vo.LoginVo;
 import com.snow.dcl.service.LoginService;
+import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,9 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    @Resource
+    private SysUserService sysUserService;
+
     @SysOperateLog("用户登录")
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
@@ -52,7 +56,9 @@ public class LoginController {
             return ResponseResult.fail().message("请登录！");
         }
         SysUser sysUser = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseResult.success().message("获取用户信息成功！").data(sysUser);
+        //根据用户名称获取用户信息（基本信息 和 菜单权限 和 按钮权限数据）
+        Map<String,Object> map = sysUserService.getUserInfo(sysUser.getId());
+        return ResponseResult.success().message("获取用户信息成功！").data(map);
     }
 
     @SysOperateLog("用户登出")

@@ -9,13 +9,17 @@ package com.snow.dcl.service.impl;
 import com.snow.dcl.dao.SysPermissionRepository;
 import com.snow.dcl.dao.SysRolePermissionRepository;
 import com.snow.dcl.dao.SysRoleRepository;
+import com.snow.dcl.dao.SysUserRoleRepository;
 import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.SysRolePermission;
+import com.snow.dcl.model.SysUserRole;
 import com.snow.dcl.model.vo.AssignPermissionVo;
+import com.snow.dcl.model.vo.RouterVo;
 import com.snow.dcl.model.vo.SysPermissionVo;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.MenuHelper;
+import com.snow.dcl.utils.RouterHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +51,9 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     @Resource
     private SysRolePermissionRepository sysRolePermissionRepository;
+
+    @Resource
+    private SysUserRoleRepository sysUserRoleRepository;
 
     @Override
     public void save(SysPermissionVo sysPermissionVo) {
@@ -128,4 +135,45 @@ public class SysPermissionServiceImpl implements SysPermissionService {
             sysRolePermissionRepository.save(sysRolePermission);
         }
     }
+
+    //根据userid查询菜单权限值
+    @Override
+    public List<RouterVo> getUserMenuList(Long userId) {
+        //admin是超级管理员，操作所有内容
+        Set<SysPermission> sysMenuList = null;
+        //判断userid值是1代表超级管理员，查询所有权限数据
+        if (userId.equals(1L)) {
+            sysMenuList = sysPermissionRepository.findAll().stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
+        } else {
+            //如果userid不是1，其他类型用户，查询这个用户权限
+            Set<Long> roleIds = sysUserRoleRepository.findByUserId(userId).stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
+            Set<Long> permissionIds = sysRolePermissionRepository.findByRoleIds(roleIds);
+            sysMenuList = sysPermissionRepository.findAllById(permissionIds).stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
+        }
+
+        //构建是树形结构
+        Set<SysPermission> sysMenuTreeList = MenuHelper.buildTree(sysMenuList);
+
+        //转换成前端路由要求格式数据
+        List<RouterVo> routerVoList = RouterHelper.buildRouters(sysMenuTreeList);
+        return routerVoList;
+    }
+
+    //根据userid查询按钮权限值
+    @Override
+    public List<String> getUserButtonList(Long userId) {
+        Set<SysPermission> sysMenuList;
+        //判断是否管理员
+        if (userId.equals(1L)) {
+            sysMenuList = sysPermissionRepository.findAll().stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
+
+        } else {
+            Set<Long> roleIds = sysUserRoleRepository.findByUserId(userId).stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
+            Set<Long> permissionIds = sysRolePermissionRepository.findByRoleIds(roleIds);
+            sysMenuList = sysPermissionRepository.findAllById(permissionIds).stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
+        }
+        List<String> permissionList = sysMenuList.stream().filter(sysPermission -> sysPermission.getType().equals(2)).map(sysPermission -> sysPermission.getPermissionValue()).collect(Collectors.toList());
+        return permissionList;
+    }
+
 }

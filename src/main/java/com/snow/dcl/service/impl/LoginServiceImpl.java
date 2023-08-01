@@ -7,7 +7,6 @@
 package com.snow.dcl.service.impl;
 
 import com.snow.dcl.constant.CacheKeyConstant;
-import com.snow.dcl.constant.CacheNameConstant;
 import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysUser;
@@ -18,7 +17,6 @@ import com.snow.dcl.utils.JwtUtil;
 import com.snow.dcl.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
         // 1.1判断用户状态
         SysUser loginUser = sysUserRepository.findByUsername(loginVo.getUsername());
         if (loginUser.getStatus().equals((short) 0)) {
-            throw new CustomException("用户已停用，请联系管理员！");
+            throw new CustomException("用户已停用，请联系平台管理员！");
         }
         // 2.authenticationManager.authenticate()方法进行登录用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
@@ -79,9 +77,6 @@ public class LoginServiceImpl implements LoginService {
         // 4.认证通过，生成token，并存如缓存
         //使用JWT生成token
         SysUser sysUser = (SysUser) authenticate.getPrincipal();
-        if (sysUser.getStatus().equals((short) 0)) {
-            throw new CustomException("该用户已停用，请联系平台管理员！");
-        }
         String token = tokenHead + jwtUtil.generateToken(sysUser);
         redisUtils.setValueTime(CacheKeyConstant.SYS_USER_ID + sysUser.getId(), token, 1440);
         //返回给前端数据

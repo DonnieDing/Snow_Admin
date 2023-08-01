@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName SysUserService
@@ -36,4 +37,6 @@ public interface SysUserService extends UserDetailsService {
     Page<SysUser> findAll(SysUser sysUser, Integer page, Integer size);
 
     void updateStatus(Long id, Short status);
+
+    Map<String, Object> getUserInfo(Long id);
 }

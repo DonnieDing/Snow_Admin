@@ -9,7 +9,9 @@ package com.snow.dcl.service.impl;
 import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysUser;
+import com.snow.dcl.model.vo.RouterVo;
 import com.snow.dcl.model.vo.SysUserVo;
+import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.BeanCopyUtils;
 import com.snow.dcl.validation.ValidationUtil;
@@ -27,9 +29,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @ClassName SysUserService
@@ -44,6 +44,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Resource
     SysUserRepository sysUserRepository;
+
+    @Resource
+    SysPermissionService sysPermissionService;
 
     @Resource
     private PasswordEncoder passwordEncoder;
@@ -134,5 +137,24 @@ public class SysUserServiceImpl implements SysUserService {
             sysUser.setStatus(status);
             sysUserRepository.save(sysUser);
         }
+    }
+
+    @Override
+    public Map<String, Object> getUserInfo(Long id) {
+        SysUser sysUser = sysUserRepository.findById(id).get();
+        //根据userid查询菜单权限值
+        List<RouterVo> routerVoList = sysPermissionService.getUserMenuList(id);
+        //根据userid查询按钮权限值
+        List<String> permsList = sysPermissionService.getUserButtonList(id);
+
+        Map<String,Object> result = new HashMap<>();
+        result.put("username",sysUser.getUsername());
+        result.put("avatar",sysUser.getAvatar());
+        result.put("roles",sysUser.getRoleSet());
+        //菜单权限数据
+        result.put("menus",routerVoList);
+        //按钮权限数据
+        result.put("buttons",permsList);
+        return result;
     }
 }
