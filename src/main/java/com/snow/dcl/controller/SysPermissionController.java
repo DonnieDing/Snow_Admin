@@ -31,7 +31,7 @@ import java.util.Set;
  */
 @Api(tags = "权限管理")
 @RestController
-@RequestMapping("/sys")
+@RequestMapping("/sys/permission")
 public class SysPermissionController {
 
     @Resource
@@ -39,7 +39,7 @@ public class SysPermissionController {
 
     @SysOperateLog("新增权限")
     @ApiOperation(value = "新增权限")
-    @PostMapping("/permission")
+    @PostMapping("/")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionVo sysPermissionVo) {
         sysPermissionService.save(sysPermissionVo);
         return ResponseResult.success().message("新增权限成功");
@@ -47,7 +47,7 @@ public class SysPermissionController {
 
     @SysOperateLog("删除权限")
     @ApiOperation(value = "删除权限")
-    @DeleteMapping("/permission/{permissionId}")
+    @DeleteMapping("/{permissionId}")
     public ResponseResult delete(@PathVariable Long permissionId) {
         sysPermissionService.delete(permissionId);
         return ResponseResult.success().message("删除权限成功");
@@ -55,30 +55,39 @@ public class SysPermissionController {
 
     @SysOperateLog("更新权限")
     @ApiOperation(value = "更新权限")
-    @PutMapping("/permission")
+    @PutMapping("/")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionVo permissionVo) {
         sysPermissionService.save(permissionVo);
         return ResponseResult.success().message("更新权限成功");
     }
 
     @ApiOperation(value = "查询所有权限")
-    @GetMapping("/permission")
+    @GetMapping("/")
     public ResponseResult findAll() {
         Set<SysPermission> permissionAll = sysPermissionService.findAll();
         return ResponseResult.success().data(permissionAll);
     }
 
     @ApiOperation(value = "根据角色获取权限")
-    @GetMapping("/permission/toAssign/{roleId}")
+    @GetMapping("/toAssign/{roleId}")
     public ResponseResult selectPermissionByRole(@PathVariable Long roleId) {
         Set<SysPermission> menuList = sysPermissionService.selectPermissionByRole(roleId);
         return ResponseResult.success().data(menuList);
     }
 
     @ApiOperation(value = "根据角色分配权限")
-    @PostMapping("/permission/doAssign")
+    @PostMapping("/doAssign")
     public ResponseResult doAssign(@RequestBody AssignPermissionVo assignPermissionVo) {
         sysPermissionService.doAssign(assignPermissionVo);
         return ResponseResult.success();
     }
+
+    @SysOperateLog("更新权限状态")
+    @ApiOperation(value = "更新权限状态")
+    @GetMapping("/updateStatus/{id}/{status}")
+    public ResponseResult updateStatus(@PathVariable Long id, @PathVariable Integer status) {
+        sysPermissionService.updateStatus(id, status);
+        return ResponseResult.success();
+    }
+
 }

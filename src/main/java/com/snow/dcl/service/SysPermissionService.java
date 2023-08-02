@@ -37,4 +37,6 @@ public interface SysPermissionService {
     List<RouterVo> getUserMenuList(Long userId);
 
     List<String> getUserButtonList(Long userId);
+
+    void updateStatus(Long id, Integer status);
 }

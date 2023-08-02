@@ -17,6 +17,7 @@ Snow_Admin是使用SpringBoot开发的后台管理系统，基于Spring Security
 - JDK 1.8
 - MySQL 5.7
 - Maven 3.5.0
+- Redis 3.0.504
 
 ## 5.技术选型
 
@@ -28,14 +29,16 @@ Snow_Admin是使用SpringBoot开发的后台管理系统，基于Spring Security
 - 工具类：hutool 5.3.4
 ## 6.项目结构
 
-单体结构，随着开发进度进化
+单体结构，随着开发进度进化。
 
 ## 7.数据库表
-在项目sql目录
+数据库文件在项目sql目录。
 ## 8.本地部署
 
 1.将项目代码克隆到本地。
 
 2.MySQL数据库中创建数据库snow-admin，然后导入项目sql目录下的snow-admin.sql文件。
 
-3.修改项目配置文件application-dev.yml中的数据库相关配置，启动服务，访问http://localhost:8080/doc.html 即可查看服务接口文档，并进行接口调试。
+3.启动Redis。
+
+3.修改项目配置文件application-dev.yml中的数据库和Redis相关配置，启动服务，访问http://localhost:8080/doc.html 即可查看服务接口文档，并进行接口调试。

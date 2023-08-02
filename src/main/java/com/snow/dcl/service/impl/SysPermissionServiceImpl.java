@@ -140,7 +140,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     @Override
     public List<RouterVo> getUserMenuList(Long userId) {
         //admin是超级管理员，操作所有内容
-        Set<SysPermission> sysMenuList = null;
+        Set<SysPermission> sysMenuList;
         //判断userid值是1代表超级管理员，查询所有权限数据
         if (userId.equals(1L)) {
             sysMenuList = sysPermissionRepository.findAll().stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
@@ -176,4 +176,11 @@ public class SysPermissionServiceImpl implements SysPermissionService {
         return permissionList;
     }
 
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        SysPermission sysPermission = sysPermissionRepository.findById(id).get();
+        sysPermission.setStatus(status);
+        List<SysPermission> sysPermissions = sysPermissionRepository.findByPid(id);
+        sysPermissions.forEach(children -> children.setStatus(status));
+    }
 }
