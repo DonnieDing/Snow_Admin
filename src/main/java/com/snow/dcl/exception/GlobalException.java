@@ -9,6 +9,7 @@ package com.snow.dcl.exception;
 import com.snow.dcl.utils.HttpCodeEnum;
 import com.snow.dcl.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
@@ -76,6 +77,15 @@ public class GlobalException {
         ResponseResult responseResult = null;
         if (e instanceof EmptyResultDataAccessException) {
             responseResult = ResponseResult.fail().code(HttpCodeEnum.DELETE_FAIL.getCode()).message(HttpCodeEnum.DELETE_FAIL.getMessage());
+        }
+        return responseResult;
+    }
+
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ResponseResult constraintException(Exception e) {
+        ResponseResult responseResult = null;
+        if (e instanceof DataIntegrityViolationException) {
+            responseResult = ResponseResult.fail().code(HttpCodeEnum.DELETE_FAIL.getCode()).message(HttpCodeEnum.CONSTRAINT_VIOLATION_FAIL.getMessage());
         }
         return responseResult;
     }

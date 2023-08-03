@@ -30,7 +30,9 @@ public enum HttpCodeEnum {
     // B服务端错误段
     // 参数校验
     PARAMETER_VALIDATED_FAIL("B0400", "参数校验失败"),
-    DELETE_FAIL("B0450", "删除失败");
+    DELETE_FAIL("B0450", "删除失败"),
+
+    CONSTRAINT_VIOLATION_FAIL("B0450", "新增数据已存在");
 
     String code;
     String message;
