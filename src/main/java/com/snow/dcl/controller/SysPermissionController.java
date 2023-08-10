@@ -15,6 +15,7 @@ import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class SysPermissionController {
     @SysOperateLog("新增权限")
     @ApiOperation(value = "新增权限")
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('permission.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionVo sysPermissionVo) {
         sysPermissionService.save(sysPermissionVo);
         return ResponseResult.success().message("新增权限成功");
@@ -48,6 +50,7 @@ public class SysPermissionController {
     @SysOperateLog("删除权限")
     @ApiOperation(value = "删除权限")
     @DeleteMapping("/{permissionId}")
+    @PreAuthorize("hasAuthority('permission.remove')")
     public ResponseResult delete(@PathVariable Long permissionId) {
         sysPermissionService.delete(permissionId);
         return ResponseResult.success().message("删除权限成功");
@@ -56,6 +59,7 @@ public class SysPermissionController {
     @SysOperateLog("更新权限")
     @ApiOperation(value = "更新权限")
     @PutMapping("/")
+    @PreAuthorize("hasAuthority('permission.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionVo permissionVo) {
         sysPermissionService.save(permissionVo);
         return ResponseResult.success().message("更新权限成功");
@@ -63,6 +67,7 @@ public class SysPermissionController {
 
     @ApiOperation(value = "查询所有权限")
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('permission.list')")
     public ResponseResult findAll() {
         Set<SysPermission> permissionAll = sysPermissionService.findAll();
         return ResponseResult.success().data(permissionAll);
@@ -77,6 +82,7 @@ public class SysPermissionController {
 
     @ApiOperation(value = "根据角色分配权限")
     @PostMapping("/doAssign")
+    @PreAuthorize("hasAuthority('role.assign')")
     public ResponseResult doAssign(@RequestBody AssignPermissionVo assignPermissionVo) {
         sysPermissionService.doAssign(assignPermissionVo);
         return ResponseResult.success();

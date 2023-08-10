@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,7 @@ public class SysUserController {
     @SysOperateLog("新增用户")
     @ApiOperation(value = "新增用户")
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('user.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysUserVo sysUserVo) {
         sysUserService.save(sysUserVo);
         return ResponseResult.success().message("新增用户成功");
@@ -50,6 +52,7 @@ public class SysUserController {
     @SysOperateLog("根据id删除用户")
     @ApiOperation(value = "根据id删除用户")
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority('user.remove')")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long userId) {
         sysUserService.delete(userId);
         return ResponseResult.success().message("删除用户成功");
@@ -58,6 +61,7 @@ public class SysUserController {
     @SysOperateLog("批量删除用户")
     @ApiOperation(value = "批量删除用户")
     @DeleteMapping("/")
+    @PreAuthorize("hasAuthority('user.remove.all')")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> userIds) {
         sysUserService.deleteBatch(userIds);
         return ResponseResult.success().message("批量删除成功");
@@ -66,6 +70,7 @@ public class SysUserController {
     @SysOperateLog("更新用户")
     @ApiOperation(value = "更新用户")
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('user.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysUserVo sysUserVo) {
         sysUserService.update(sysUserVo);
         return ResponseResult.success().message("修改用户成功");
@@ -73,7 +78,6 @@ public class SysUserController {
 
     @ApiOperation(value = "根据id查询用户")
     @GetMapping("/{userId}")
-    // @PreAuthorize("hasAuthority('user.list')")
     public ResponseResult queryById(@PathVariable Long userId) {
         SysUser sysUser = sysUserService.findOne(userId);
         return ResponseResult.success().data(sysUser);
@@ -81,7 +85,7 @@ public class SysUserController {
 
     @ApiOperation(value = "分页条件查询用户")
     @PostMapping("/{page}/{size}")
-    // @PreAuthorize("hasAuthority('user.list')")
+    @PreAuthorize("hasAuthority('user.list')")
     public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysUserVo sysUserVo) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(sysUserVo, sysUser);

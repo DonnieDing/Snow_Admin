@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,7 @@ public class SysRoleController {
     @SysOperateLog("新增角色")
     @ApiOperation(value = "新增角色")
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('role.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
         sysRoleService.save(sysRoleVo);
         return ResponseResult.success().message("新增角色成功");
@@ -52,6 +54,7 @@ public class SysRoleController {
     @SysOperateLog("更新角色")
     @ApiOperation(value = "更新角色")
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('role.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
         try {
             sysRoleService.update(sysRoleVo);
@@ -64,6 +67,7 @@ public class SysRoleController {
     @SysOperateLog("删除角色")
     @ApiOperation(value = "删除角色")
     @DeleteMapping("/{roleId}")
+    @PreAuthorize("hasAuthority('role.remove')")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long roleId) {
         sysRoleService.delete(roleId);
         return ResponseResult.success().message("删除角色成功");
@@ -72,6 +76,7 @@ public class SysRoleController {
     @SysOperateLog("批量删除角色")
     @ApiOperation(value = "批量删除角色")
     @DeleteMapping("/")
+    @PreAuthorize("hasAuthority('role.remove.all')")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> roleIds) {
         sysRoleService.deleteBatch(roleIds);
         return ResponseResult.success().message("批量删除成功");
@@ -89,7 +94,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "分页条件查询角色")
     @PostMapping("/{page}/{size}")
-    // @PreAuthorize("hasAuthority('role.list')")
+    @PreAuthorize("hasAuthority('role.list')")
     public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysRoleVo sysRoleVo) {
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(sysRoleVo, sysRole);
@@ -110,6 +115,7 @@ public class SysRoleController {
     @SysOperateLog("根据用户分配角色")
     @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
+    @PreAuthorize("hasAuthority('user.assign')")
     public ResponseResult doAssign(@RequestBody AssignRoleVo assignRoleVo) {
         sysRoleService.doAssign(assignRoleVo);
         return ResponseResult.success();

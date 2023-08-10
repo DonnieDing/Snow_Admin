@@ -7,11 +7,9 @@ import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.JwtUtil;
 import com.snow.dcl.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -76,7 +74,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             if (!ObjectUtils.isEmpty(userId) && SecurityContextHolder.getContext().getAuthentication() == null) {
                 SysUser sysUser = sysUserService.findOne(userId);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(sysUser, null, sysUser.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
