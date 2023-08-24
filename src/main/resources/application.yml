@@ -34,6 +34,21 @@ jwt:
   # token头部
   tokenHead: 'Bearer '
 
+# 文件存储配置
+file:
+  mac:
+    path: ~/snowAdmin/file/
+    avatar: ~/snowAdmin/avatar/
+  linux:
+    path: /home/snowAdmin/file/
+    avatar: /home/snowAdmin/avatar/
+  windows:
+    path: C:\snowAdmin\file\
+    avatar: C:\snowAdmin\avatar\
+  # 文件大小 /M
+  maxSize: 50
+  avatarMaxSize: 5
+
 # 微信小程序
 mini:
   # 密钥

@@ -6,10 +6,13 @@
  */
 package com.snow.dcl.controller;
 
+import cn.hutool.core.io.file.FileReader;
 import com.snow.dcl.annotation.SysOperateLog;
+import com.snow.dcl.model.SysFile;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.vo.LoginVo;
 import com.snow.dcl.service.LoginService;
+import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.ResponseResult;
 import io.swagger.annotations.Api;
@@ -40,6 +43,9 @@ public class LoginController {
     @Resource
     private SysUserService sysUserService;
 
+    @Resource
+    private SysFileService sysFileService;
+
     @SysOperateLog("用户登录")
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
@@ -68,6 +74,16 @@ public class LoginController {
 
         loginService.logout();
         return ResponseResult.success().message("退出成功！");
+    }
+
+    @ApiOperation(value = "展示信息")
+    @GetMapping("/index")
+    public ResponseResult index() {
+
+        SysFile sysFile = sysFileService.getById();
+        FileReader fileReader = new FileReader(sysFile.getPath());
+
+        return ResponseResult.success().message("获取用户信息成功！").data(fileReader.readString());
     }
 
 }
