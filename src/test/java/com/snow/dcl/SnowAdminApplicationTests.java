@@ -9,7 +9,6 @@ import com.snow.dcl.dao.SysPermissionRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysLog;
 import com.snow.dcl.model.SysPermission;
-import com.snow.dcl.utils.BaiduAddressUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -28,21 +27,6 @@ class SnowAdminApplicationTests {
 
     @Resource
     FileConfig fileConfig;
-
-    @Resource
-    BaiduAddressUtil baiduAddressUtil;
-
-    @Test
-    void contextLoadsBaiDuMapResult() {
-        JSONObject result = baiduAddressUtil.getResult("211.137.70.48");
-        System.out.println(result.toString());
-    }
-
-    @Test
-    void contextLoadsBaiDuMapAddress() {
-        String address = baiduAddressUtil.getAddress("211.137.70.48");
-        System.out.println(address);
-    }
 
     @Test
     void contextLoadsSystemPath() {
