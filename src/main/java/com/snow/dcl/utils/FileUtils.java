@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -184,7 +185,7 @@ public class FileUtils extends FileUtil {
      * @return 文件内容字符串
      */
     public static String getTxtFileContent(String filePath) {
-        FileReader fileReader = new FileReader(filePath);
+        FileReader fileReader = new FileReader(filePath, Charset.forName(System.getProperties().get("sun.jnu.encoding").toString()));
         return fileReader.readString();
     }
 

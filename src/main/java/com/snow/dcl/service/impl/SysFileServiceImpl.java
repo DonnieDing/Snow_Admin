@@ -63,7 +63,7 @@ public class SysFileServiceImpl implements SysFileService {
 
     @Override
     public SysFile getById() {
-        SysFile sysFile = sysFileRepository.findById(1L).get();
+        SysFile sysFile = sysFileRepository.findById(2L).get();
         return sysFile;
     }
 }
