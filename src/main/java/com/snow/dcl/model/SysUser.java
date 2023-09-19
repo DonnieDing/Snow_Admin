@@ -33,7 +33,7 @@ import java.util.*;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class SysUser implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5539630790320060413L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

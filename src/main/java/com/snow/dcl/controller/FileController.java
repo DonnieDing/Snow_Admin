@@ -28,7 +28,7 @@ public class FileController {
     @Resource
     private SysFileService sysFileService;
 
-    @PostMapping
+    @PostMapping("/upload")
     @ApiOperation("上传文件")
     public ResponseResult uploadFile(@RequestParam String name, @RequestParam("file") MultipartFile file){
         sysFileService.create(name, file);

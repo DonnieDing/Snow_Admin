@@ -11,49 +11,40 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
- * @ClassName SysPermission
+ * @ClassName PoetryAuthor
  * (功能描述)
- * 权限实体类
+ * 诗词作者
  * @Author Dcl_Snow
- * @Create 2021/8/26 22:37
- * @version 1.0.0
+ * @Create 2023/9/19 10:18
+ * @Version 1.0.0
  */
 @Entity
-@Table(name = "sys_permission")
+@Table(name = "poetry_content")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
-public class SysPermission implements Serializable {
+public class PoetryContent implements Serializable {
 
-    private static final long serialVersionUID = -4853406141294159197L;
+    private static final long serialVersionUID = -3829859489286080952L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    private Long pid;
+    @Column(name = "author_id")
+    private Long authorId;
 
-    private String name;
+    @Column(name = "category_id")
+    private Long categoryId;
 
-    private Integer type;
+    private String title;
 
-    private String permissionValue;
-
-    private String path;
-
-    private String component;
-
-    private String icon;
-
-    private Integer status;
-
-    private Boolean isDeleted = false;
+    private String content;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -63,13 +54,12 @@ public class SysPermission implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
-    @Transient
-    private Integer level;
+    @JoinColumn(name = "author_id",insertable = false,updatable = false)
+    @OneToOne(targetEntity=PoetryAuthor.class,cascade=CascadeType.DETACH)
+    private PoetryAuthor poetryAuthor;
 
-    @Transient
-    private List<SysPermission> children;
-
-    @Transient
-    private boolean isSelect;
+    @JoinColumn(name = "category_id",insertable = false,updatable = false)
+    @OneToOne(targetEntity=PoetryCategory.class,cascade=CascadeType.DETACH)
+    private PoetryCategory poetryCategory;
 
 }

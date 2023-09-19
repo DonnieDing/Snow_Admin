@@ -22,6 +22,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class SysLog implements Serializable {
 
+    private static final long serialVersionUID = -9136513388030403513L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

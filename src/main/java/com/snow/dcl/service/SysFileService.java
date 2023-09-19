@@ -7,4 +7,6 @@ public interface SysFileService {
     SysFile create(String name, MultipartFile file);
 
     SysFile getById();
+
+    void analyze(String path);
 }

@@ -189,6 +189,11 @@ public class FileUtils extends FileUtil {
         return fileReader.readString();
     }
 
+    public static String getTxtFileContentUtf8(String filePath) {
+        FileReader fileReader = new FileReader(filePath);
+        return fileReader.readString();
+    }
+
     /**
      * 文件大小转换
      */

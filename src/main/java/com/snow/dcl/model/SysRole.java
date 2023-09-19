@@ -32,7 +32,7 @@ import java.util.Set;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class SysRole implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -540361977700912741L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
