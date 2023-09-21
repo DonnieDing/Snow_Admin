@@ -1,7 +1,7 @@
 package com.snow.dcl.controller;
 
 import com.snow.dcl.model.PoetryContent;
-import com.snow.dcl.model.dto.PoetryDto;
+import com.snow.dcl.model.dto.poetry.PoetryDto;
 import com.snow.dcl.service.PoetryService;
 import com.snow.dcl.utils.ResponseResult;
 import io.swagger.annotations.Api;

@@ -11,7 +11,8 @@ import com.snow.dcl.dao.PoetryContentRepository;
 import com.snow.dcl.dao.SysFileRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.*;
-import com.snow.dcl.model.dto.PoetryDto;
+import com.snow.dcl.model.dto.poetry.ChuCiDto;
+import com.snow.dcl.model.dto.poetry.PoetryDto;
 import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.utils.FileUtils;
 import org.springframework.stereotype.Service;
@@ -83,25 +84,27 @@ public class SysFileServiceImpl implements SysFileService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public void analyze(String path) {
         PoetryAuthor poetryAuthor = new PoetryAuthor();
-        poetryAuthor.setName("曹操");
-        poetryAuthor.setIntroduce("曹操(155年-220年)，字孟德，一名吉利，小字阿瞒，一说本姓夏侯，沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家，东汉末年权臣，亦是曹魏政权的奠基者。");
+        poetryAuthor.setName("屈原");
+        poetryAuthor.setIntroduce("屈原（约公元前340年-公元前278年），芈姓（一作嬭姓），屈氏，名平，字原，又自云名正则，字灵均，出生于楚国丹阳秭归（今湖北宜昌），战国时期楚国诗人、政治家。");
         PoetryAuthor author = poetryAuthorRepository.save(poetryAuthor);
 
         PoetryCategory poetryCategory = new PoetryCategory();
-        poetryCategory.setTitle("三国");
+        poetryCategory.setTitle("楚辞");
         PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
 
 
         String txtFileContent = FileUtils.getTxtFileContentUtf8(path);
-        List<PoetryDto> poetryDtoList = JSON.parseArray(txtFileContent, PoetryDto.class);
-        for (PoetryDto poetryDto : poetryDtoList) {
+//        List<PoetryDto> poetryDtoList = JSON.parseArray(txtFileContent, PoetryDto.class);
+        List<ChuCiDto> chuCiDtoList = JSON.parseArray(txtFileContent, ChuCiDto.class);
+        for (ChuCiDto chuCiDto : chuCiDtoList) {
             PoetryContent poetryContent = new PoetryContent();
             poetryContent.setAuthorId(author.getId());
             poetryContent.setCategoryId(category.getId());
-            poetryContent.setTitle(poetryDto.getTitle());
-            poetryContent.setContent(poetryDto.getParagraphs());
+            poetryContent.setTitle(chuCiDto.getSection() + "-" + chuCiDto.getTitle());
+            poetryContent.setContent(chuCiDto.getContent());
             poetryContentRepository.save(poetryContent);
         }
     }

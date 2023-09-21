@@ -1,4 +1,4 @@
-package com.snow.dcl.model.dto;
+package com.snow.dcl.model.dto.poetry;
 
 import lombok.Data;
 
