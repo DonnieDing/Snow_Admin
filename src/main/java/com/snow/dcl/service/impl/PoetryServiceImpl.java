@@ -48,4 +48,9 @@ public class PoetryServiceImpl implements PoetryService {
         Page<PoetryContent> pagePoetryContent = poetryContentRepository.findAll(specification, pageable);
         return pagePoetryContent;
     }
+
+    @Override
+    public PoetryContent findById(Long id) {
+        return poetryContentRepository.findById(id).orElseGet(PoetryContent::new);
+    }
 }

@@ -42,4 +42,11 @@ public class PoetryController {
         return ResponseResult.success().data(hashMap);
     }
 
+    @ApiOperation(value = "根据id查询详情")
+    @PostMapping("/{id}")
+    public ResponseResult findOne(@PathVariable Long id) {
+        PoetryContent poetryContent = poetryService.findById(id);
+        return ResponseResult.success().data(poetryContent);
+    }
+
 }

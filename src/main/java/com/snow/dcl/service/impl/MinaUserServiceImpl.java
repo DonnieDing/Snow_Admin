@@ -2,13 +2,11 @@ package com.snow.dcl.service.impl;
 
 import cn.hutool.http.HttpUtil;
 import com.snow.dcl.constant.CacheKeyConstant;
-import com.snow.dcl.constant.CacheNameConstant;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.vo.WxLoginVo;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

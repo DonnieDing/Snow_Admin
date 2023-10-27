@@ -12,4 +12,6 @@ import org.springframework.data.domain.Page;
  */
 public interface PoetryService {
     Page<PoetryContent> findAll(PoetryContent poetryContent, Integer page, Integer size);
+
+    PoetryContent findById(Long id);
 }

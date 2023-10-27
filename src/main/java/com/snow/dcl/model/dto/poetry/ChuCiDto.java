@@ -10,5 +10,5 @@ public class ChuCiDto {
     private String title;
     private String section;
     private String author;
-    private String content;
+    private String[] content;
 }
