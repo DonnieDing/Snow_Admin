@@ -3,7 +3,7 @@ package com.snow.dcl.service.impl;
 import cn.hutool.http.HttpUtil;
 import com.snow.dcl.constant.CacheKeyConstant;
 import com.snow.dcl.exception.CustomException;
-import com.snow.dcl.model.vo.WxLoginVo;
+import com.snow.dcl.model.dto.system.WxLoginDto;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,7 +73,7 @@ public class MinaUserServiceImpl implements MinaUserService {
     }
 
     @Override
-    public ResponseResult authLogin(WxLoginVo wxLoginVo) {
+    public ResponseResult authLogin(WxLoginDto wxLoginDto) {
         /**
          * 1.对WxLoginVo进行数据解密
          * 2.解密完成后获取微信用户信息（openId等）

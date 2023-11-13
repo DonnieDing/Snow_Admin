@@ -1,8 +1,8 @@
 package com.snow.dcl.utils;
 
 import com.snow.dcl.model.SysPermission;
-import com.snow.dcl.model.vo.MetaVo;
-import com.snow.dcl.model.vo.RouterVo;
+import com.snow.dcl.model.dto.system.MetaDto;
+import com.snow.dcl.model.dto.system.RouterDto;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -25,26 +25,26 @@ public class RouterHelper {
      * @param menus
      * @return
      */
-    public static List<RouterVo> buildRouters(Set<SysPermission> menus) {
-        List<RouterVo> routers = new LinkedList<>();
+    public static List<RouterDto> buildRouters(Set<SysPermission> menus) {
+        List<RouterDto> routers = new LinkedList<>();
         for (SysPermission menu : menus) {
-            RouterVo router = new RouterVo();
+            RouterDto router = new RouterDto();
             router.setHidden(false);
             router.setAlwaysShow(false);
             router.setPath(getRouterPath(menu));
             router.setComponent(menu.getComponent());
-            router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
+            router.setMeta(new MetaDto(menu.getName(), menu.getIcon()));
             Set<SysPermission> children = menu.getChildren().stream().collect(Collectors.toSet());
             //如果当前是菜单，需将按钮对应的路由加载出来，如：“角色授权”按钮对应的路由在“系统管理”下面
             if(menu.getType() == 1) {
                 List<SysPermission> hiddenMenuList = children.stream().filter(item -> !StringUtils.isEmpty(item.getComponent())).collect(Collectors.toList());
                 for (SysPermission hiddenMenu : hiddenMenuList) {
-                    RouterVo hiddenRouter = new RouterVo();
+                    RouterDto hiddenRouter = new RouterDto();
                     hiddenRouter.setHidden(true);
                     hiddenRouter.setAlwaysShow(false);
                     hiddenRouter.setPath(getRouterPath(hiddenMenu));
                     hiddenRouter.setComponent(hiddenMenu.getComponent());
-                    hiddenRouter.setMeta(new MetaVo(hiddenMenu.getName(), hiddenMenu.getIcon()));
+                    hiddenRouter.setMeta(new MetaDto(hiddenMenu.getName(), hiddenMenu.getIcon()));
                     routers.add(hiddenRouter);
                 }
             } else {

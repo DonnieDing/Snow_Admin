@@ -10,7 +10,7 @@ import com.snow.dcl.constant.CacheKeyConstant;
 import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysUser;
-import com.snow.dcl.model.vo.LoginVo;
+import com.snow.dcl.model.dto.system.LoginDto;
 import com.snow.dcl.service.CaptchaService;
 import com.snow.dcl.service.LoginService;
 import com.snow.dcl.utils.JwtUtil;
@@ -59,16 +59,16 @@ public class LoginServiceImpl implements LoginService {
     private SysUserRepository sysUserRepository;
 
     @Override
-    public Map<String, String> login(LoginVo loginVo) {
+    public Map<String, String> login(LoginDto loginDto) {
         // 1.校验验证码
-        captchaService.verification(loginVo.getCaptcha(), loginVo.getCodeKey());
+        captchaService.verification(loginDto.getCaptcha(), loginDto.getCodeKey());
         // 1.1判断用户状态
-        SysUser loginUser = sysUserRepository.findByUsername(loginVo.getUsername());
+        SysUser loginUser = sysUserRepository.findByUsername(loginDto.getUsername());
         if (loginUser.getStatus().equals((short) 0)) {
             throw new CustomException("用户已停用，请联系平台管理员！");
         }
         // 2.authenticationManager.authenticate()方法进行登录用户认证
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         // 3.判断认证是否成功，认证未通过，返回提示
         if (Objects.isNull(authenticate)) {

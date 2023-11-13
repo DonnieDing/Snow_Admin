@@ -9,7 +9,7 @@ package com.snow.dcl.controller;
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysFile;
 import com.snow.dcl.model.SysUser;
-import com.snow.dcl.model.vo.LoginVo;
+import com.snow.dcl.model.dto.system.LoginDto;
 import com.snow.dcl.service.LoginService;
 import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.service.SysUserService;
@@ -49,8 +49,8 @@ public class LoginController {
     @SysOperateLog("用户登录")
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public ResponseResult login(@RequestBody LoginVo loginVo) {
-        Map<String, String> map = loginService.login(loginVo);
+    public ResponseResult login(@RequestBody LoginDto loginDto) {
+        Map<String, String> map = loginService.login(loginDto);
         return ResponseResult.success().message("登陆成功！").data(map);
     }
 

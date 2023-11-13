@@ -9,8 +9,8 @@ package com.snow.dcl.service.impl;
 import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysUser;
-import com.snow.dcl.model.vo.RouterVo;
-import com.snow.dcl.model.vo.SysUserVo;
+import com.snow.dcl.model.dto.system.RouterDto;
+import com.snow.dcl.model.dto.system.SysUserDto;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.BeanCopyUtils;
@@ -52,21 +52,21 @@ public class SysUserServiceImpl implements SysUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void save(SysUserVo sysUserVo) {
+    public void save(SysUserDto sysUserDto) {
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(sysUserVo, sysUser);
+        BeanUtils.copyProperties(sysUserDto, sysUser);
         String encodePassword = passwordEncoder.encode(sysUser.getPassword());
         sysUser.setPassword(encodePassword);
         sysUserRepository.save(sysUser);
     }
 
     @Override
-    public void update(SysUserVo sysUserVo) {
-        SysUser sysUser = sysUserRepository.getById(sysUserVo.getId());
+    public void update(SysUserDto sysUserDto) {
+        SysUser sysUser = sysUserRepository.getById(sysUserDto.getId());
         if (ObjectUtils.isEmpty(sysUser)) {
             throw new CustomException("用户不存在");
         }
-        BeanUtils.copyProperties(sysUserVo, sysUser, BeanCopyUtils.getNullPropertyNames(sysUserVo));
+        BeanUtils.copyProperties(sysUserDto, sysUser, BeanCopyUtils.getNullPropertyNames(sysUserDto));
         sysUserRepository.save(sysUser);
     }
 
@@ -143,7 +143,7 @@ public class SysUserServiceImpl implements SysUserService {
     public Map<String, Object> getUserInfo(Long id) {
         SysUser sysUser = sysUserRepository.findById(id).get();
         //根据userid查询菜单权限值
-        List<RouterVo> routerVoList = sysPermissionService.getUserMenuList(id);
+        List<RouterDto> routerDtoList = sysPermissionService.getUserMenuList(id);
         //根据userid查询按钮权限值
         List<String> permsList = sysPermissionService.getUserButtonList(id);
 
@@ -152,7 +152,7 @@ public class SysUserServiceImpl implements SysUserService {
         result.put("avatar",sysUser.getAvatar());
         result.put("roles",sysUser.getRoleSet());
         //菜单权限数据
-        result.put("menus",routerVoList);
+        result.put("menus", routerDtoList);
         //按钮权限数据
         result.put("buttons",permsList);
         return result;

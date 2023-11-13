@@ -1,7 +1,6 @@
 package com.snow.dcl.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.snow.dcl.model.vo.WxLoginVo;
+import com.snow.dcl.model.dto.system.WxLoginDto;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.ResponseResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,7 @@ public class MinaUserController {
     }
 
     @PostMapping("/authLogin")
-    public ResponseResult authLogin(@RequestBody WxLoginVo wxLoginVo) throws JsonProcessingException {
-        return minaUserService.authLogin(wxLoginVo);
+    public ResponseResult authLogin(@RequestBody WxLoginDto wxLoginDto) {
+        return minaUserService.authLogin(wxLoginDto);
     }
 }

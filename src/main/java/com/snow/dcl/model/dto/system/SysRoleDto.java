@@ -4,7 +4,7 @@
  * <author>    <create>    <version>   <desc>
  * 作者姓名     修改时间        版本号    功能描述
  */
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import com.snow.dcl.validation.GroupValidator;
 import io.swagger.annotations.ApiModel;
@@ -23,7 +23,7 @@ import javax.validation.constraints.NotBlank;
  */
 @ApiModel(value="SysRoleVo", description="角色参数对象")
 @Data
-public class SysRoleVo {
+public class SysRoleDto {
 
     @ApiModelProperty(value = "角色id")
     private Long id;

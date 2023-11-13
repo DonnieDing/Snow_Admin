@@ -7,9 +7,9 @@
 package com.snow.dcl.service;
 
 import com.snow.dcl.model.SysPermission;
-import com.snow.dcl.model.vo.AssignPermissionVo;
-import com.snow.dcl.model.vo.RouterVo;
-import com.snow.dcl.model.vo.SysPermissionVo;
+import com.snow.dcl.model.dto.system.AssignPermissionDto;
+import com.snow.dcl.model.dto.system.RouterDto;
+import com.snow.dcl.model.dto.system.SysPermissionDto;
 
 import java.util.List;
 import java.util.Set;
@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public interface SysPermissionService {
 
-    void save(SysPermissionVo sysPermissionVo);
+    void save(SysPermissionDto sysPermissionDto);
 
     void delete(Long permissionId);
 
@@ -32,9 +32,9 @@ public interface SysPermissionService {
 
     Set<SysPermission> selectPermissionByRole(Long roleId);
 
-    void doAssign(AssignPermissionVo assignPermissionVo);
+    void doAssign(AssignPermissionDto assignPermissionDto);
 
-    List<RouterVo> getUserMenuList(Long userId);
+    List<RouterDto> getUserMenuList(Long userId);
 
     List<String> getUserButtonList(Long userId);
 

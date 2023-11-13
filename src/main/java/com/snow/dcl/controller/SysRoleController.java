@@ -8,8 +8,8 @@ package com.snow.dcl.controller;
 
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysRole;
-import com.snow.dcl.model.vo.AssignRoleVo;
-import com.snow.dcl.model.vo.SysRoleVo;
+import com.snow.dcl.model.dto.system.AssignRoleDto;
+import com.snow.dcl.model.dto.system.SysRoleDto;
 import com.snow.dcl.service.SysRoleService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
@@ -46,8 +46,8 @@ public class SysRoleController {
     @ApiOperation(value = "新增角色")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('role.add')")
-    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
-        sysRoleService.save(sysRoleVo);
+    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleDto sysRoleDto) {
+        sysRoleService.save(sysRoleDto);
         return ResponseResult.success().message("新增角色成功");
     }
 
@@ -55,9 +55,9 @@ public class SysRoleController {
     @ApiOperation(value = "更新角色")
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('role.update')")
-    public ResponseResult update(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleVo sysRoleVo) {
+    public ResponseResult update(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleDto sysRoleDto) {
         try {
-            sysRoleService.update(sysRoleVo);
+            sysRoleService.update(sysRoleDto);
         } catch (Exception e) {
             return ResponseResult.fail().message("修改角色成失败");
         }
@@ -95,9 +95,9 @@ public class SysRoleController {
     @ApiOperation(value = "分页条件查询角色")
     @PostMapping("/{page}/{size}")
     @PreAuthorize("hasAuthority('role.list')")
-    public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysRoleVo sysRoleVo) {
+    public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysRoleDto sysRoleDto) {
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleVo, sysRole);
+        BeanUtils.copyProperties(sysRoleDto, sysRole);
         Page<SysRole> PageSysRoles = sysRoleService.findAll(sysRole, page, size);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("total", PageSysRoles.getTotalElements());
@@ -116,8 +116,8 @@ public class SysRoleController {
     @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
     @PreAuthorize("hasAuthority('user.assign')")
-    public ResponseResult doAssign(@RequestBody AssignRoleVo assignRoleVo) {
-        sysRoleService.doAssign(assignRoleVo);
+    public ResponseResult doAssign(@RequestBody AssignRoleDto assignRoleDto) {
+        sysRoleService.doAssign(assignRoleDto);
         return ResponseResult.success();
     }
 }

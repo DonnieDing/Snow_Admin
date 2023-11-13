@@ -4,7 +4,7 @@
  * <author>    <create>    <version>   <desc>
  * 作者姓名     修改时间        版本号    功能描述
  */
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import com.snow.dcl.validation.GroupValidator;
 import io.swagger.annotations.ApiModel;
@@ -25,7 +25,7 @@ import javax.validation.constraints.Null;
  */
 @ApiModel(value="SysPermissionVo", description="权限参数对象")
 @Data
-public class SysPermissionVo {
+public class SysPermissionDto {
 
     @ApiModelProperty(value = "权限id")
     @Null(groups = GroupValidator.Create.class, message = "id必须为null")

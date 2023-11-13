@@ -11,8 +11,8 @@ import com.snow.dcl.dao.SysUserRoleRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.SysUserRole;
-import com.snow.dcl.model.vo.AssignRoleVo;
-import com.snow.dcl.model.vo.SysRoleVo;
+import com.snow.dcl.model.dto.system.AssignRoleDto;
+import com.snow.dcl.model.dto.system.SysRoleDto;
 import com.snow.dcl.service.SysRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -47,19 +47,19 @@ public class SysRoleServiceImpl implements SysRoleService {
     SysUserRoleRepository sysUserRoleRepository;
 
     @Override
-    public void save(SysRoleVo sysRoleVo) {
+    public void save(SysRoleDto sysRoleDto) {
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleVo, sysRole);
+        BeanUtils.copyProperties(sysRoleDto, sysRole);
         sysRoleRepository.save(sysRole);
     }
 
     @Override
-    public void update(SysRoleVo sysRoleVo) {
-        SysRole sysRole = sysRoleRepository.getById(sysRoleVo.getId());
+    public void update(SysRoleDto sysRoleDto) {
+        SysRole sysRole = sysRoleRepository.getById(sysRoleDto.getId());
         if (ObjectUtils.isEmpty(sysRole)) {
             throw new CustomException("角色不存在");
         }
-        BeanUtils.copyProperties(sysRoleVo, sysRole);
+        BeanUtils.copyProperties(sysRoleDto, sysRole);
         sysRoleRepository.save(sysRole);
     }
 
@@ -118,13 +118,13 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Transactional(rollbackFor = Throwable.class)
     @Override
-    public void doAssign(AssignRoleVo assignRoleVo) {
-        sysUserRoleRepository.deleteByUserId(assignRoleVo.getUserId());
-        List<Long> roleIdList = assignRoleVo.getRoleIdList();
+    public void doAssign(AssignRoleDto assignRoleDto) {
+        sysUserRoleRepository.deleteByUserId(assignRoleDto.getUserId());
+        List<Long> roleIdList = assignRoleDto.getRoleIdList();
         if (!CollectionUtils.isEmpty(roleIdList)) {
             for (Long roleId : roleIdList) {
                 SysUserRole sysUserRole = new SysUserRole();
-                sysUserRole.setUserId(assignRoleVo.getUserId());
+                sysUserRole.setUserId(assignRoleDto.getUserId());
                 sysUserRole.setRoleId(roleId);
                 sysUserRoleRepository.save(sysUserRole);
             }

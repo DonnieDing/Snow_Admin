@@ -4,9 +4,8 @@
  * <author>    <create>    <version>   <desc>
  * 作者姓名     修改时间        版本号    功能描述
  */
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
-import com.snow.dcl.annotation.StringEnum;
 import com.snow.dcl.validation.GroupValidator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,8 +13,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 /**
  * @ClassName SysUSerVo
@@ -27,7 +24,7 @@ import javax.validation.constraints.Null;
  */
 @ApiModel(value="SysUserVo", description="用户参数对象")
 @Data
-public class SysUserVo {
+public class SysUserDto {
 
     @ApiModelProperty(value = "用户id")
     private Long id;

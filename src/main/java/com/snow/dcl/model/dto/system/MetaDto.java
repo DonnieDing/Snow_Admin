@@ -1,4 +1,4 @@
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  *
  */
 @Data
-public class MetaVo
+public class MetaDto
 {
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
@@ -19,11 +19,11 @@ public class MetaVo
      */
     private String icon;
 
-    public MetaVo()
+    public MetaDto()
     {
     }
 
-    public MetaVo(String title, String icon)
+    public MetaDto(String title, String icon)
     {
         this.title = title;
         this.icon = icon;

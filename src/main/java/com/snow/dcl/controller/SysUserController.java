@@ -8,7 +8,7 @@ package com.snow.dcl.controller;
 
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysUser;
-import com.snow.dcl.model.vo.SysUserVo;
+import com.snow.dcl.model.dto.system.SysUserDto;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
@@ -44,8 +44,8 @@ public class SysUserController {
     @ApiOperation(value = "新增用户")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('user.add')")
-    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysUserVo sysUserVo) {
-        sysUserService.save(sysUserVo);
+    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysUserDto sysUserDto) {
+        sysUserService.save(sysUserDto);
         return ResponseResult.success().message("新增用户成功");
     }
 
@@ -71,8 +71,8 @@ public class SysUserController {
     @ApiOperation(value = "更新用户")
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('user.update')")
-    public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysUserVo sysUserVo) {
-        sysUserService.update(sysUserVo);
+    public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysUserDto sysUserDto) {
+        sysUserService.update(sysUserDto);
         return ResponseResult.success().message("修改用户成功");
     }
 
@@ -86,9 +86,9 @@ public class SysUserController {
     @ApiOperation(value = "分页条件查询用户")
     @PostMapping("/{page}/{size}")
     @PreAuthorize("hasAuthority('user.list')")
-    public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysUserVo sysUserVo) {
+    public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysUserDto sysUserDto) {
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(sysUserVo, sysUser);
+        BeanUtils.copyProperties(sysUserDto, sysUser);
         Page<SysUser> PageSysUsers = sysUserService.findAll(sysUser, page, size);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("total", PageSysUsers.getTotalElements());

@@ -1,4 +1,4 @@
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 @Data
-public class RouterVo
+public class RouterDto
 {
     /**
      * 路由地址
@@ -34,11 +34,11 @@ public class RouterVo
     /**
      * 其他元素
      */
-    private MetaVo meta;
+    private MetaDto meta;
 
     /**
      * 子路由
      */
-    private List<RouterVo> children;
+    private List<RouterDto> children;
 
 }

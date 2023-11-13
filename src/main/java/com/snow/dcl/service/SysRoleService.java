@@ -7,8 +7,8 @@
 package com.snow.dcl.service;
 
 import com.snow.dcl.model.SysRole;
-import com.snow.dcl.model.vo.AssignRoleVo;
-import com.snow.dcl.model.vo.SysRoleVo;
+import com.snow.dcl.model.dto.system.AssignRoleDto;
+import com.snow.dcl.model.dto.system.SysRoleDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -24,9 +24,9 @@ import java.util.Map;
  */
 public interface SysRoleService {
 
-    void save(SysRoleVo sysRoleVo);
+    void save(SysRoleDto sysRoleDto);
 
-    void update(SysRoleVo sysRoleVo);
+    void update(SysRoleDto sysRoleDto);
 
     void delete(Long roleId);
 
@@ -38,5 +38,5 @@ public interface SysRoleService {
 
     Map<String, Object> getRolesByUserId(Long userId);
 
-    void doAssign(AssignRoleVo assignRoleVo);
+    void doAssign(AssignRoleDto assignRoleDto);
 }

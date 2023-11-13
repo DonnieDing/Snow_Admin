@@ -14,9 +14,9 @@ import com.snow.dcl.model.SysPermission;
 import com.snow.dcl.model.SysRole;
 import com.snow.dcl.model.SysRolePermission;
 import com.snow.dcl.model.SysUserRole;
-import com.snow.dcl.model.vo.AssignPermissionVo;
-import com.snow.dcl.model.vo.RouterVo;
-import com.snow.dcl.model.vo.SysPermissionVo;
+import com.snow.dcl.model.dto.system.AssignPermissionDto;
+import com.snow.dcl.model.dto.system.RouterDto;
+import com.snow.dcl.model.dto.system.SysPermissionDto;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.MenuHelper;
 import com.snow.dcl.utils.RouterHelper;
@@ -56,14 +56,14 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     private SysUserRoleRepository sysUserRoleRepository;
 
     @Override
-    public void save(SysPermissionVo sysPermissionVo) {
+    public void save(SysPermissionDto sysPermissionDto) {
         SysPermission sysPermission;
-        if (sysPermissionVo.getId() == null) {
+        if (sysPermissionDto.getId() == null) {
             sysPermission = new SysPermission();
         } else {
-            sysPermission = sysPermissionRepository.getById(sysPermissionVo.getId());
+            sysPermission = sysPermissionRepository.getById(sysPermissionDto.getId());
         }
-        BeanUtils.copyProperties(sysPermissionVo, sysPermission);
+        BeanUtils.copyProperties(sysPermissionDto, sysPermission);
         sysPermissionRepository.save(sysPermission);
     }
 
@@ -122,12 +122,12 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     @Override
     @Transactional
-    public void doAssign(AssignPermissionVo assignPermissionVo) {
-        Long roleId = assignPermissionVo.getRoleId();
+    public void doAssign(AssignPermissionDto assignPermissionDto) {
+        Long roleId = assignPermissionDto.getRoleId();
         // 根据角色id删除权限
         sysRolePermissionRepository.deleteByRoleId(roleId);
         // 遍历权限id列表，添加权限
-        List<Long> permissionIdList = assignPermissionVo.getPermissionIdList();
+        List<Long> permissionIdList = assignPermissionDto.getPermissionIdList();
         for (Long permissionId : permissionIdList) {
             SysRolePermission sysRolePermission = new SysRolePermission();
             sysRolePermission.setRoleId(roleId);
@@ -138,7 +138,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     //根据userid查询菜单权限值
     @Override
-    public List<RouterVo> getUserMenuList(Long userId) {
+    public List<RouterDto> getUserMenuList(Long userId) {
         //admin是超级管理员，操作所有内容
         Set<SysPermission> sysMenuList;
         //判断userid值是1代表超级管理员，查询所有权限数据
@@ -155,8 +155,8 @@ public class SysPermissionServiceImpl implements SysPermissionService {
         Set<SysPermission> sysMenuTreeList = MenuHelper.buildTree(sysMenuList);
 
         //转换成前端路由要求格式数据
-        List<RouterVo> routerVoList = RouterHelper.buildRouters(sysMenuTreeList);
-        return routerVoList;
+        List<RouterDto> routerDtoList = RouterHelper.buildRouters(sysMenuTreeList);
+        return routerDtoList;
     }
 
     //根据userid查询按钮权限值

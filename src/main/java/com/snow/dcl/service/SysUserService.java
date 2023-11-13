@@ -7,7 +7,7 @@
 package com.snow.dcl.service;
 
 import com.snow.dcl.model.SysUser;
-import com.snow.dcl.model.vo.SysUserVo;
+import com.snow.dcl.model.dto.system.SysUserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -24,9 +24,9 @@ import java.util.Map;
  */
 public interface SysUserService extends UserDetailsService {
 
-    void save(SysUserVo sysUserVo);
+    void save(SysUserDto sysUserDto);
 
-    void update(SysUserVo sysUserVo);
+    void update(SysUserDto sysUserDto);
 
     void delete(Long userId);
 

@@ -4,7 +4,7 @@
  * <author>    <create>    <version>   <desc>
  * 作者姓名     修改时间        版本号    功能描述
  */
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
  */
 @ApiModel(value="LoginVo", description="用户登录参数对象")
 @Data
-public class LoginVo {
+public class LoginDto {
 
     @ApiModelProperty(value = "用户名称")
     @NotNull

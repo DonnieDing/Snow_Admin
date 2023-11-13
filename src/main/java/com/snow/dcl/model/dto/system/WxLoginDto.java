@@ -1,4 +1,4 @@
-package com.snow.dcl.model.vo;
+package com.snow.dcl.model.dto.system;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
  * @Version 1.0.0
  */
 @Data
-public class WxLoginVo {
+public class WxLoginDto {
 
     // 微信传递的加密数据，需要进行解密
     private String encryptedData;

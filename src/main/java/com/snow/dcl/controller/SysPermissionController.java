@@ -8,8 +8,8 @@ package com.snow.dcl.controller;
 
 import com.snow.dcl.annotation.SysOperateLog;
 import com.snow.dcl.model.SysPermission;
-import com.snow.dcl.model.vo.AssignPermissionVo;
-import com.snow.dcl.model.vo.SysPermissionVo;
+import com.snow.dcl.model.dto.system.AssignPermissionDto;
+import com.snow.dcl.model.dto.system.SysPermissionDto;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
@@ -42,8 +42,8 @@ public class SysPermissionController {
     @ApiOperation(value = "新增权限")
     @PostMapping("/")
     @PreAuthorize("hasAuthority('permission.add')")
-    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionVo sysPermissionVo) {
-        sysPermissionService.save(sysPermissionVo);
+    public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionDto sysPermissionDto) {
+        sysPermissionService.save(sysPermissionDto);
         return ResponseResult.success().message("新增权限成功");
     }
 
@@ -60,7 +60,7 @@ public class SysPermissionController {
     @ApiOperation(value = "更新权限")
     @PutMapping("/")
     @PreAuthorize("hasAuthority('permission.update')")
-    public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionVo permissionVo) {
+    public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionDto permissionVo) {
         sysPermissionService.save(permissionVo);
         return ResponseResult.success().message("更新权限成功");
     }
@@ -83,8 +83,8 @@ public class SysPermissionController {
     @ApiOperation(value = "根据角色分配权限")
     @PostMapping("/doAssign")
     @PreAuthorize("hasAuthority('role.assign')")
-    public ResponseResult doAssign(@RequestBody AssignPermissionVo assignPermissionVo) {
-        sysPermissionService.doAssign(assignPermissionVo);
+    public ResponseResult doAssign(@RequestBody AssignPermissionDto assignPermissionDto) {
+        sysPermissionService.doAssign(assignPermissionDto);
         return ResponseResult.success();
     }
 
