@@ -104,6 +104,7 @@ public class MinaUserServiceImpl implements MinaUserService {
             newSysUser.setNickName("minaUser" + wxOpenId);
             String encodePassword = passwordEncoder.encode(wxOpenId);
             newSysUser.setPassword(encodePassword);
+            newSysUser.setWxOpenId(wxOpenId);
             sysUserRepository.save(newSysUser);
             log.info("新用户信息：" + newSysUser);
             sysUser = newSysUser;
