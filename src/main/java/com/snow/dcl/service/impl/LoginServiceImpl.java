@@ -62,23 +62,7 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, String> login(LoginDto loginDto) {
         // 1.校验验证码
         captchaService.verification(loginDto.getCaptcha(), loginDto.getCodeKey());
-        // 1.1判断用户状态
-        SysUser loginUser = sysUserRepository.findByUsername(loginDto.getUsername());
-        if (loginUser.getStatus().equals((short) 0)) {
-            throw new CustomException("用户已停用，请联系平台管理员！");
-        }
-        // 2.authenticationManager.authenticate()方法进行登录用户认证
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        // 3.判断认证是否成功，认证未通过，返回提示
-        if (Objects.isNull(authenticate)) {
-            throw new CustomException("登录失败！");
-        }
-        // 4.认证通过，生成token，并存如缓存
-        //使用JWT生成token
-        SysUser sysUser = (SysUser) authenticate.getPrincipal();
-        String token = tokenHead + jwtUtil.generateToken(sysUser);
-        redisUtils.setValueTime(CacheKeyConstant.SYS_USER_ID + sysUser.getId(), token, 1440);
+        String token = this.verifyUser(loginDto.getUsername(), loginDto.getPassword());
         //返回给前端数据
         Map<String, String> map = new HashMap<>();
         map.put("token", token);
@@ -90,4 +74,22 @@ public class LoginServiceImpl implements LoginService {
         SysUser sysUser = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         redisUtils.delKey(CacheKeyConstant.SYS_USER_ID + sysUser.getId());
     }
+
+    @Override
+    public String verifyUser(String username, String password) {
+        // 2.authenticationManager.authenticate()方法进行登录用户认证
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        // 3.判断认证是否成功，认证未通过，返回提示
+        if (Objects.isNull(authenticate)) {
+            throw new CustomException("登录失败！");
+        }
+        // 4.认证通过，生成token，并存如缓存
+        //使用JWT生成token
+        SysUser sysUser = (SysUser) authenticate.getPrincipal();
+        String token = tokenHead + jwtUtil.generateToken(sysUser);
+        redisUtils.setValueTime(CacheKeyConstant.SYS_USER_ID + sysUser.getId(), token, 1440);
+        return token;
+    }
+
 }

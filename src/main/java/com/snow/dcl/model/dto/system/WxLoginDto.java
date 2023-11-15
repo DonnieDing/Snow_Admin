@@ -14,10 +14,10 @@ import lombok.Data;
 public class WxLoginDto {
 
     // 微信传递的加密数据，需要进行解密
-    private String encryptedData;
+    // private String encryptedData;
 
     // 解密算法的初始向量
-    private String iv;
+    // private String iv;
 
     private String sessionId;
 }

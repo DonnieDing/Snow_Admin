@@ -57,7 +57,7 @@ public class SysUser implements UserDetails, Serializable {
 
     private Short status = 1;
 
-    private Boolean isDeleted = false;
+    private String wxOpenId;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

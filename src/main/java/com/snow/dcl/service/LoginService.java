@@ -9,4 +9,6 @@ public interface LoginService {
     Map<String, String> login(LoginDto loginDto);
 
     void logout();
+
+    String verifyUser(String username, String password);
 }

@@ -126,6 +126,9 @@ public class SysUserServiceImpl implements SysUserService {
             // 此处new一个BadCredentialsException改写异常信息“该用户不存在”
             throw new BadCredentialsException(username + ":该用户不存在！");
         }
+        if (sysUser.getStatus().equals((short) 0)) {
+            throw new CustomException("用户已停用，请联系平台管理员！");
+        }
         return sysUser;
     }
 
