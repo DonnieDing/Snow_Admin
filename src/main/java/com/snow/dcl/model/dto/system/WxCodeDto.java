@@ -13,4 +13,8 @@ import lombok.Data;
 @Data
 public class WxCodeDto {
     private String code;
+
+    private String nickname;
+
+    private String avatarUrl;
 }

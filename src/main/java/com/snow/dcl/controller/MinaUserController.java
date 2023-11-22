@@ -1,7 +1,6 @@
 package com.snow.dcl.controller;
 
 import com.snow.dcl.model.dto.system.WxCodeDto;
-import com.snow.dcl.model.dto.system.WxLoginDto;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.ResponseResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,15 +25,9 @@ public class MinaUserController {
     @Resource
     private MinaUserService minaUserService;
 
-    @PostMapping("/getSessionId")
-    public ResponseResult getSessionId(@RequestBody WxCodeDto wxCodeDto) {
-        String sessionId = minaUserService.getSessionId(wxCodeDto.getCode());
-        return ResponseResult.success().data(sessionId);
-    }
-
-    @PostMapping("/wxLogin")
-    public ResponseResult wxLogin(@RequestBody WxLoginDto wxLoginDto) {
-        String token = minaUserService.wxLogin(wxLoginDto);
+    @PostMapping("/minaLogin")
+    public ResponseResult minaLogin(@RequestBody WxCodeDto wxCodeDto) {
+        String token = minaUserService.minaLogin(wxCodeDto);
         return ResponseResult.success().data(token);
     }
 }
