@@ -51,7 +51,7 @@ public class SysUserDto {
 
     @ApiModelProperty(value = "用户性别")
 //    @StringEnum(value = {"男", "女"}, message = "性别只允许为'男'或'女'")
-    private String gender;
+    private Integer gender;
 
     @ApiModelProperty(value = "用户头像")
     private String avatar;

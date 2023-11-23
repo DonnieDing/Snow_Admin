@@ -16,4 +16,6 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long>, JpaSpec
     SysUser findByUsername(String username);
 
     SysUser findByWxOpenId(String wxOpenId);
+
+    SysUser findByUsernameAndWxOpenId(String username,String wxOpenId);
 }

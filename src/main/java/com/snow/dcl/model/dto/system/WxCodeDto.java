@@ -17,4 +17,6 @@ public class WxCodeDto {
     private String nickname;
 
     private String avatarUrl;
+
+    private Integer gender;
 }

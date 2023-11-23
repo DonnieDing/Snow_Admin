@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -42,25 +43,37 @@ public class MinaUserServiceImpl implements MinaUserService {
         String code = wxCodeDto.getCode();
         String nickname = wxCodeDto.getNickname();
         String avatarUrl = wxCodeDto.getAvatarUrl();
+        Integer gender = wxCodeDto.getGender();
         String wxOpenId = minaUtils.jscode2session(code);
         SysUser sysUser = sysUserRepository.findByWxOpenId(wxOpenId);
         if (ObjectUtils.isEmpty(sysUser)) {
             SysUser newSysUser = new SysUser();
-            newSysUser.setUsername(nickname);
-            newSysUser.setNickName(nickname);
+            if (StringUtils.hasText(nickname)) {
+                newSysUser.setUsername(wxOpenId + nickname);
+                newSysUser.setNickName(nickname);
+            } else {
+                newSysUser.setUsername(wxOpenId);
+                newSysUser.setNickName(wxOpenId);
+            }
             String encodePassword = passwordEncoder.encode(wxOpenId);
             newSysUser.setPassword(encodePassword);
             newSysUser.setWxOpenId(wxOpenId);
             newSysUser.setAvatar(avatarUrl);
+            newSysUser.setGender(gender);
             sysUserRepository.save(newSysUser);
             log.info("新用户信息：" + newSysUser);
             sysUser = newSysUser;
         } else {
-            if (!nickname.equals(sysUser.getNickName())){
-                sysUser.setUsername(nickname);
-                sysUser.setNickName(nickname);
+            if (StringUtils.hasText(nickname)) {
+                if (!nickname.equals(sysUser.getNickName())) {
+                    sysUser.setUsername(wxOpenId + nickname);
+                    sysUser.setNickName(nickname);
+                }
+            } else {
+                sysUser.setUsername(wxOpenId);
+                sysUser.setNickName(wxOpenId);
             }
-            if (!avatarUrl.equals(sysUser.getAvatar())){
+            if (!avatarUrl.equals(sysUser.getAvatar())) {
                 sysUser.setAvatar(avatarUrl);
             }
             sysUserRepository.save(sysUser);

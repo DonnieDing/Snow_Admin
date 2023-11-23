@@ -51,7 +51,7 @@ public class SysUser implements UserDetails, Serializable {
 
     private String email;
 
-    private String gender;
+    private Integer gender;
 
     private String avatar;
 
