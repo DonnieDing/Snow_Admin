@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //请求都需要进行认证之后才能访问，除白名单以外的资源
         http.authorizeRequests()
-                .antMatchers("/user/login", "/captcha/*", "/user/minaLogin", "/poetry/**").permitAll()
+                .antMatchers("/user/login", "/captcha/*", "/user/minaLogin").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
