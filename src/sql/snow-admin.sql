@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2023-11-15 16:59:42
+Date: 2023-11-28 21:04:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -145,7 +145,7 @@ CREATE TABLE `sys_log` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `log_create_time_index` (`create_time`) USING BTREE,
   KEY `inx_log_type` (`log_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
@@ -310,6 +310,8 @@ INSERT INTO `sys_log` VALUES ('157', '用户登录', 'ERROR', 'com.snow.dcl.cont
 INSERT INTO `sys_log` VALUES ('158', '用户登录', 'INFO', 'com.snow.dcl.controller.LoginController.login()', '{\"username\":\"admin\"}', '172.16.41.238', '299', 'admin', '内网IP', 'Chrome-116.0.0.0', null, '2023-09-12 17:26:41');
 INSERT INTO `sys_log` VALUES ('159', '用户登录', 'INFO', 'com.snow.dcl.controller.LoginController.login()', '{\"username\":\"admin\"}', '172.16.41.238', '319', 'admin', '内网IP', 'Chrome-116.0.0.0', null, '2023-09-12 17:47:05');
 INSERT INTO `sys_log` VALUES ('160', '用户登录', 'INFO', 'com.snow.dcl.controller.LoginController.login()', '{\"username\":\"admin\"}', '172.16.41.238', '335', 'admin', '内网IP', 'Chrome-118.0.0.0', null, '2023-10-27 14:16:23');
+INSERT INTO `sys_log` VALUES ('161', '用户登录', 'INFO', 'com.snow.dcl.controller.LoginController.login()', '{\"username\":\"admin\"}', '172.16.41.238', '98', 'admin', '内网IP', 'Chrome-119.0.0.0', null, '2023-11-23 09:33:32');
+INSERT INTO `sys_log` VALUES ('162', '新增用户', 'INFO', 'com.snow.dcl.controller.SysUserController.save()', '{\"nickName\":\"test000\",\"password\":\"111111\",\"phone\":\"13900000000\",\"username\":\"test000\"}', '172.16.41.238', '123', 'admin', '内网IP', 'Chrome-119.0.0.0', null, '2023-11-23 09:42:46');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -467,24 +469,23 @@ CREATE TABLE `sys_user` (
   `nick_name` varchar(50) DEFAULT NULL COMMENT '用户昵称',
   `phone` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `gender` varchar(20) DEFAULT NULL,
+  `gender` int(11) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL COMMENT '用户头像',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '''状态（1：正常 0：停用）''',
   `wx_open_id` varchar(50) DEFAULT NULL,
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uk_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户表';
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$0/E5EhjcDYUxm.WTuO0RpOsNlZGsHf3zdMEpI1zHiT8GWuFsAhY8G', 'admin', '15900000000', null, '男', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2019-11-01 10:39:47', '2019-11-01 10:39:47');
-INSERT INTO `sys_user` VALUES ('2', 'class_admin', '$2a$10$ZwcMZNPJ6uPzS60Rd09iye7P50RGm0uG/uJB9zHRaJd3X0rVCfM5W', 'nickname', '15900000001', null, '女', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2021-04-27 09:21:48', '2021-05-19 10:17:17');
-INSERT INTO `sys_user` VALUES ('3', 'Dcl_Snow', '$2a$10$ZwcMZNPJ6uPzS60Rd09iye7P50RGm0uG/uJB9zHRaJd3X0rVCfM5W', 'Dcl_Snow', '15900000002', null, '男', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2021-04-13 15:47:02', '2021-04-13 15:47:02');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$0/E5EhjcDYUxm.WTuO0RpOsNlZGsHf3zdMEpI1zHiT8GWuFsAhY8G', 'admin', '15900000000', null, null, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2019-11-01 10:39:47', '2019-11-01 10:39:47');
+INSERT INTO `sys_user` VALUES ('2', 'class_admin', '$2a$10$ZwcMZNPJ6uPzS60Rd09iye7P50RGm0uG/uJB9zHRaJd3X0rVCfM5W', 'nickname', '15900000001', null, null, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2021-04-27 09:21:48', '2021-05-19 10:17:17');
+INSERT INTO `sys_user` VALUES ('3', 'Dcl_Snow', '$2a$10$ZwcMZNPJ6uPzS60Rd09iye7P50RGm0uG/uJB9zHRaJd3X0rVCfM5W', 'Dcl_Snow', '15900000002', null, null, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2021-04-13 15:47:02', '2021-04-13 15:47:02');
 INSERT INTO `sys_user` VALUES ('4', 'Snow', '$2a$10$n7KdbXLRUYe3.I2gjbwIs.wZbuzu7BbvVNsjYC9.LqnAS3P24wA.K', 'Snow', '15900000001', null, null, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '1', null, '2023-08-09 15:33:10', '2023-08-09 15:33:10');
-INSERT INTO `sys_user` VALUES ('5', 'oJZVRuAxKWrEVBa6ynE4N0N6KkbY', '$2a$10$I2GP9wt1EvTZJlBmjLCJgOmfphZbHvl7YxvOTAeN/QC1GOJTlQj.m', 'minaUseroJZVRuAxKWrEVBa6ynE4N0N6KkbY', null, null, null, null, '1', null, '2023-11-15 16:37:09', '2023-11-15 16:37:09');
+INSERT INTO `sys_user` VALUES ('12', 'oJZVRuAxKWrEVBa6ynE4N0N6KkbYDcl_Snow', '$2a$10$DS84Hp6BygG9tqbXhcv/Mea2JH2Ib5oMVvzjPwo4n0I.cVHKmSe2e', 'Dcl_Snow', null, null, '0', 'https://thirdwx.qlogo.cn/mmopen/vi_32/sTA7cI38DzvibrIhjsnib3ia2Y3da4zD1JfF7TvUqwtPkddgVnpVDw0NsXE6DHA7oSfLM3zRQql3yQ87JgW5QvhXw/132', '1', 'oJZVRuAxKWrEVBa6ynE4N0N6KkbY', '2023-11-23 09:54:25', '2023-11-23 09:54:25');
 
 -- ----------------------------
 -- Table structure for sys_user_role
