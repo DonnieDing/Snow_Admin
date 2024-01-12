@@ -85,7 +85,7 @@ public class GlobalException {
     public ResponseResult constraintException(Exception e) {
         ResponseResult responseResult = null;
         if (e instanceof DataIntegrityViolationException) {
-            responseResult = ResponseResult.fail().code(HttpCodeEnum.DELETE_FAIL.getCode()).message(HttpCodeEnum.CONSTRAINT_VIOLATION_FAIL.getMessage());
+            responseResult = ResponseResult.fail().code(HttpCodeEnum.CONSTRAINT_VIOLATION_FAIL.getCode()).message(HttpCodeEnum.CONSTRAINT_VIOLATION_FAIL.getMessage());
         }
         return responseResult;
     }
