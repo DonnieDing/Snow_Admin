@@ -7,8 +7,13 @@ import lombok.Data;
  */
 @Data
 public class ChuCiDto {
+
     private String title;
+
     private String section;
+
     private String author;
+
     private String[] content;
+
 }
