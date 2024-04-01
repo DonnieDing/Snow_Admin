@@ -23,7 +23,7 @@ import javax.validation.constraints.Null;
  * @Create 2021/8/27 11:28
  * @Version 1.0.0
  */
-@ApiModel(value="SysPermissionVo", description="权限参数对象")
+@ApiModel(value="SysPermissionDto", description="权限参数对象")
 @Data
 public class SysPermissionDto {
 

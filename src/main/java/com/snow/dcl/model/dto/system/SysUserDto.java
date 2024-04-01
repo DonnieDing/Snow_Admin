@@ -22,7 +22,7 @@ import javax.validation.constraints.NotBlank;
  * @Create 2021/8/24 15:13
  * @Version 1.0.0
  */
-@ApiModel(value="SysUserVo", description="用户参数对象")
+@ApiModel(value="SysUserDto", description="用户参数对象")
 @Data
 public class SysUserDto {
 

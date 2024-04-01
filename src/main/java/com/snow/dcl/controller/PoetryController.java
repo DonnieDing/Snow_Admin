@@ -33,9 +33,9 @@ public class PoetryController {
     @PostMapping("/{page}/{size}")
     // @PreAuthorize("hasAuthority('poetry.list')")
     public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody PoetryDto poetryDto) {
-        PoetryContent PoetryContent = new PoetryContent();
-        BeanUtils.copyProperties(poetryDto, PoetryContent);
-        Page<PoetryContent> PagePoetryContents = poetryService.findAll(PoetryContent, page, size);
+        PoetryContent poetryContent = new PoetryContent();
+        BeanUtils.copyProperties(poetryDto, poetryContent);
+        Page<PoetryContent> PagePoetryContents = poetryService.findAll(poetryContent, page, size);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("total", PagePoetryContents.getTotalElements());
         hashMap.put("records", PagePoetryContents.getContent());

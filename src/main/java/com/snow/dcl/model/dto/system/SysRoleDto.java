@@ -21,7 +21,7 @@ import javax.validation.constraints.NotBlank;
  * @Create 2021/8/27 10:12
  * @Version 1.0.0
  */
-@ApiModel(value="SysRoleVo", description="角色参数对象")
+@ApiModel(value="SysRoleDto", description="角色参数对象")
 @Data
 public class SysRoleDto {
 

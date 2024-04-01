@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * @Create 2021/11/19 14:11
  * @Version 1.0.0
  */
-@ApiModel(value="LoginVo", description="用户登录参数对象")
+@ApiModel(value="LoginDto", description="用户登录参数对象")
 @Data
 public class LoginDto {
 
