@@ -43,5 +43,7 @@ public class FileConfig {
         private String path;
 
         private String avatar;
+
+        private String images;
     }
 }

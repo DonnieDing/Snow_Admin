@@ -39,12 +39,15 @@ file:
   mac:
     path: ~/snowAdmin/file/
     avatar: ~/snowAdmin/avatar/
+    images: ~/snowAdmin/images/
   linux:
     path: /home/snowAdmin/file/
     avatar: /home/snowAdmin/avatar/
+    images: /home/snowAdmin/images/
   windows:
     path: C:\snowAdmin\file\
     avatar: C:\snowAdmin\avatar\
+    images: C:\snowAdmin\images\
   # 文件大小 /M
   maxSize: 50
   avatarMaxSize: 5

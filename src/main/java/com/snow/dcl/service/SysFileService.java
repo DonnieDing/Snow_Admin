@@ -9,4 +9,6 @@ public interface SysFileService {
     SysFile getById();
 
     void analyze(String path);
+
+    String images(MultipartFile image);
 }

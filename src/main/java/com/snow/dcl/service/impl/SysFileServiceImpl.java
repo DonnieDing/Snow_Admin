@@ -17,22 +17,26 @@ import com.snow.dcl.model.SysFile;
 import com.snow.dcl.model.dto.poetry.ChuCiDto;
 import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.utils.FileUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
- * @ClassName FileServiceImpl
+ * @ClassName SysFileServiceImpl
  * (功能描述)
  * 文件Service实现
  * @Author Dcl_Snow
  * @Create 2023/8/21 11:06
  * @Version 1.0.0
  */
+@Slf4j
 @Service
 public class SysFileServiceImpl implements SysFileService {
 
@@ -130,6 +134,37 @@ public class SysFileServiceImpl implements SysFileService {
             }
             poetryContent.setContent(result);
             poetryContentRepository.save(poetryContent);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public String images(MultipartFile image) {
+        String filePath = fileConfig.getOsFileUse().getImages();
+        //服务器中文件不存在，就创建配置文件中的文件夹
+        File[] files = new File(filePath).listFiles();
+        if (files == null) {
+            new File(filePath).mkdirs();
+        }
+        try {
+            FileUtils.checkSize(fileConfig.getMaxSize(), image.getSize());
+            String fileName = image.getOriginalFilename();
+            File file = new File(filePath, fileName);
+            String imagePath = file.getPath();
+            InputStream is = image.getInputStream();
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = is.read(bytes)) != -1) {
+                fos.write(bytes, 0, length);
+            }
+            is.close();
+            fos.close();
+            log.info("图片上传成功", fileName);
+            return imagePath;
+        } catch (Exception e) {
+            log.error("上传图片异常：{}", e);
+            throw new CustomException("上传图片异常");
         }
     }
 }

@@ -3,30 +3,43 @@ package com.snow.dcl;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.alibaba.fastjson.JSONObject;
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.snow.dcl.config.FileConfig;
-import com.snow.dcl.dao.SysPermissionRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysLog;
-import com.snow.dcl.model.SysPermission;
+import com.snow.dcl.service.SysFileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @SpringBootTest
 class SnowAdminApplicationTests {
 
     @Resource
-    SysPermissionRepository sysPermissionRepository;
+    SysFileService sysFileService;
 
     @Resource
     FileConfig fileConfig;
+
+    @Test
+    void contextLoadsPoetry() {
+
+        String filePath = "E:\\githubProj\\chinas_poetry\\chuci\\chuci.json";
+        sysFileService.analyze(filePath);
+
+    }
+
+    @Test
+    void contextLoadsChinese() {
+
+        String original = "天門喜氣曉氛氳";
+        String result = ZhConverterUtil.toSimple(original);
+        System.out.println(result);
+
+    }
 
     @Test
     void contextLoadsSystemPath() {
@@ -36,7 +49,7 @@ class SnowAdminApplicationTests {
 
     }
     @Test
-    void contextLoadsFile() throws IOException {
+    void contextLoadsFile() {
 
         String dateStr1 = "2023-08-24 22:33:23";
         Date date1 = DateUtil.parse(dateStr1);
@@ -165,22 +178,6 @@ class SnowAdminApplicationTests {
         SysLog sysLog = new SysLog();
         sysLog.setExceptionDetail(ExceptionUtil.getMessage(exception));
         System.out.println(sysLog);
-    }
-
-    @Test
-    void contextLoads1() {
-        List<SysPermission> all = sysPermissionRepository.findAll();
-        // List<SysPermission> sysPermissions = new ArrayList<>();
-        // for (SysPermission sysPermission : all) {
-        //     if (sysPermission.getStatus().equals(1)){
-        //         sysPermissions.add(sysPermission);
-        //     }
-        // }
-        // Set<SysPermission> collect = sysPermissions.stream().collect(Collectors.toSet());
-        // collect.stream().forEach(sysPermission -> System.out.println(sysPermission));
-        // Set<SysPermission> collect = all.stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toList()).stream().collect(Collectors.toSet());
-        Set<SysPermission> collect = all.stream().filter(sysPermission -> sysPermission.getStatus().equals(1)).collect(Collectors.toSet());
-        collect.stream().forEach(sysPermission -> System.out.println(sysPermission));
     }
 
 }
