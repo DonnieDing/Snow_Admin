@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.snow.dcl.config.FileConfig;
 import com.snow.dcl.dao.PoetryAuthorRepository;
 import com.snow.dcl.dao.PoetryCategoryRepository;
@@ -14,7 +15,7 @@ import com.snow.dcl.model.PoetryAuthor;
 import com.snow.dcl.model.PoetryCategory;
 import com.snow.dcl.model.PoetryContent;
 import com.snow.dcl.model.SysFile;
-import com.snow.dcl.model.dto.poetry.ChuCiDto;
+import com.snow.dcl.model.dto.poetry.TangThreeDto;
 import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -92,15 +93,15 @@ public class SysFileServiceImpl implements SysFileService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public void analyze(String path) {
-        PoetryAuthor poetryAuthor = new PoetryAuthor();
-        poetryAuthor.setName("屈原");
-        poetryAuthor.setIntroduce("屈原（约公元前340年-公元前278年），芈姓（一作嬭姓），屈氏，名平，字原，又自云名正则，字灵均，出生于楚国丹阳秭归（今湖北宜昌），战国时期楚国诗人、政治家。");
-        // poetryAuthor.setName("曹操");
-        // poetryAuthor.setIntroduce("曹操（155年-220年3月15日），字孟德，一名吉利，小字阿瞒，一说本姓夏侯，沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家，东汉末年权臣，亦是曹魏政权的奠基者。");
-        //
-        PoetryAuthor author = poetryAuthorRepository.save(poetryAuthor);
+//        PoetryAuthor poetryAuthor = new PoetryAuthor();
+//        poetryAuthor.setName("屈原");
+//        poetryAuthor.setIntroduce("屈原（约公元前340年-公元前278年），芈姓（一作嬭姓），屈氏，名平，字原，又自云名正则，字灵均，出生于楚国丹阳秭归（今湖北宜昌），战国时期楚国诗人、政治家。");
+//        // poetryAuthor.setName("曹操");
+//        // poetryAuthor.setIntroduce("曹操（155年-220年3月15日），字孟德，一名吉利，小字阿瞒，一说本姓夏侯，沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家，东汉末年权臣，亦是曹魏政权的奠基者。");
+//        //
+//        PoetryAuthor author = poetryAuthorRepository.save(poetryAuthor);
         PoetryCategory poetryCategory = new PoetryCategory();
-        poetryCategory.setTitle("楚辞");
+        poetryCategory.setTitle("唐诗三百首");
         PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
 
 
@@ -120,16 +121,30 @@ public class SysFileServiceImpl implements SysFileService {
         //     }
         //     poetryContent.setContent(result);
         //楚辞
-        List<ChuCiDto> chuCiDtoList = JSON.parseArray(txtFileContent, ChuCiDto.class);
-        for (ChuCiDto chuCiDto : chuCiDtoList) {
+        List<TangThreeDto> tangThreeDtoList = JSON.parseArray(txtFileContent, TangThreeDto.class);
+        for (TangThreeDto tangThreeDto : tangThreeDtoList) {
             PoetryContent poetryContent = new PoetryContent();
-            poetryContent.setAuthorId(author.getId());
+            Long authorId;
+            //作者信息
+            String author = ZhConverterUtil.toSimple(tangThreeDto.getAuthor());
+            PoetryAuthor poetryAuthor = poetryAuthorRepository.findByName(author);
+
+            //诗词内容信息
+            if (!ObjectUtil.isNull(poetryAuthor)) {
+                authorId = poetryAuthor.getId();
+            } else {
+                PoetryAuthor newPoetryAuthor = new PoetryAuthor();
+                newPoetryAuthor.setName("屈原");
+                newPoetryAuthor = poetryAuthorRepository.save(newPoetryAuthor);
+                authorId = newPoetryAuthor.getId();
+            }
+            poetryContent.setAuthorId(authorId);
             poetryContent.setCategoryId(category.getId());
-            poetryContent.setTitle(chuCiDto.getSection() + "-" + chuCiDto.getTitle());
-            String[] contents = chuCiDto.getContent();
+            poetryContent.setTitle(tangThreeDto.getTitle());
+            String[] contents = tangThreeDto.getParagraphs();
             String result = "";
             for (String content : contents) {
-                String s = content + "。";
+                String s = ZhConverterUtil.toSimple(content) + "。";
                 result += s;
             }
             poetryContent.setContent(result);

@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PoetryAuthorRepository extends JpaRepository<PoetryAuthor,Long>, JpaSpecificationExecutor<PoetryAuthor> {
 
+    PoetryAuthor findByName(String name);
 }
