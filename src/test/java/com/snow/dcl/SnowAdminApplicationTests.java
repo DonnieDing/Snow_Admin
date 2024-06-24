@@ -27,7 +27,7 @@ class SnowAdminApplicationTests {
     @Test
     void contextLoadsPoetry() {
 
-        String filePath = "E:\\githubProj\\chinas_poetry\\chuci\\chuci.json";
+        String filePath = "E:\\githubProj\\chinas_poetry\\self\\poet.tang.6000.json";
         sysFileService.analyze(filePath);
 
     }
@@ -35,10 +35,16 @@ class SnowAdminApplicationTests {
     @Test
     void contextLoadsChinese() {
 
-        String original = "天門喜氣曉氛氳";
+        String original = "嫩刺牽衣細，新條窣草垂。";
         String result = ZhConverterUtil.toSimple(original);
         System.out.println(result);
 
+    }
+
+    public static void main(String[] args) {
+        String original = "韓王從善";
+        String result = ZhConverterUtil.toSimple(original);
+        System.out.println(result);
     }
 
     @Test

@@ -12,7 +12,6 @@ import com.snow.dcl.dao.PoetryContentRepository;
 import com.snow.dcl.dao.SysFileRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.PoetryAuthor;
-import com.snow.dcl.model.PoetryCategory;
 import com.snow.dcl.model.PoetryContent;
 import com.snow.dcl.model.SysFile;
 import com.snow.dcl.model.dto.poetry.TangThreeDto;
@@ -100,9 +99,9 @@ public class SysFileServiceImpl implements SysFileService {
 //        // poetryAuthor.setIntroduce("曹操（155年-220年3月15日），字孟德，一名吉利，小字阿瞒，一说本姓夏侯，沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家，东汉末年权臣，亦是曹魏政权的奠基者。");
 //        //
 //        PoetryAuthor author = poetryAuthorRepository.save(poetryAuthor);
-        PoetryCategory poetryCategory = new PoetryCategory();
-        poetryCategory.setTitle("唐诗三百首");
-        PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
+//        PoetryCategory poetryCategory = new PoetryCategory();
+//        poetryCategory.setTitle("全唐诗");
+//        PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
 
 
         String txtFileContent = FileUtils.getTxtFileContentUtf8(path);
@@ -134,17 +133,19 @@ public class SysFileServiceImpl implements SysFileService {
                 authorId = poetryAuthor.getId();
             } else {
                 PoetryAuthor newPoetryAuthor = new PoetryAuthor();
-                newPoetryAuthor.setName("屈原");
+                newPoetryAuthor.setName(author);
+                System.out.println("库里没有的作者：" + author);
                 newPoetryAuthor = poetryAuthorRepository.save(newPoetryAuthor);
                 authorId = newPoetryAuthor.getId();
             }
             poetryContent.setAuthorId(authorId);
-            poetryContent.setCategoryId(category.getId());
-            poetryContent.setTitle(tangThreeDto.getTitle());
+            poetryContent.setCategoryId(3L);
+            String title = ZhConverterUtil.toSimple(tangThreeDto.getTitle());
+            poetryContent.setTitle(title);
             String[] contents = tangThreeDto.getParagraphs();
             String result = "";
             for (String content : contents) {
-                String s = ZhConverterUtil.toSimple(content) + "。";
+                String s = ZhConverterUtil.toSimple(content);
                 result += s;
             }
             poetryContent.setContent(result);
