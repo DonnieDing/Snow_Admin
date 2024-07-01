@@ -12,15 +12,13 @@ import com.snow.dcl.model.dto.system.SysUserDto;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +30,6 @@ import java.util.List;
  * @Create 2021/8/24 15:22
  * @Version 1.0.0
  */
-@Api(tags = "用户管理")
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController {
@@ -41,7 +38,6 @@ public class SysUserController {
     SysUserService sysUserService;
 
     @SysOperateLog("新增用户")
-    @ApiOperation(value = "新增用户")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('user.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysUserDto sysUserDto) {
@@ -50,7 +46,6 @@ public class SysUserController {
     }
 
     @SysOperateLog("根据id删除用户")
-    @ApiOperation(value = "根据id删除用户")
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('user.remove')")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long userId) {
@@ -59,7 +54,6 @@ public class SysUserController {
     }
 
     @SysOperateLog("批量删除用户")
-    @ApiOperation(value = "批量删除用户")
     @DeleteMapping("/")
     @PreAuthorize("hasAuthority('user.remove.all')")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> userIds) {
@@ -68,7 +62,6 @@ public class SysUserController {
     }
 
     @SysOperateLog("更新用户")
-    @ApiOperation(value = "更新用户")
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('user.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysUserDto sysUserDto) {
@@ -76,14 +69,12 @@ public class SysUserController {
         return ResponseResult.success().message("修改用户成功");
     }
 
-    @ApiOperation(value = "根据id查询用户")
     @GetMapping("/{userId}")
     public ResponseResult queryById(@PathVariable Long userId) {
         SysUser sysUser = sysUserService.findOne(userId);
         return ResponseResult.success().data(sysUser);
     }
 
-    @ApiOperation(value = "分页条件查询用户")
     @PostMapping("/{page}/{size}")
     @PreAuthorize("hasAuthority('user.list')")
     public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysUserDto sysUserDto) {
@@ -97,7 +88,6 @@ public class SysUserController {
     }
 
     @SysOperateLog("更新用户状态")
-    @ApiOperation(value = "更新用户状态")
     @GetMapping("/updateStatus/{id}/{status}")
     public ResponseResult updateStatus(@PathVariable Long id, @PathVariable Short status) {
         sysUserService.updateStatus(id, status);

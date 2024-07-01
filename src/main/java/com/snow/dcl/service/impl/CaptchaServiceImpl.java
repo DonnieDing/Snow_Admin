@@ -5,13 +5,13 @@ import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.service.CaptchaService;
 import com.snow.dcl.utils.RedisUtils;
 import com.wf.captcha.ArithmeticCaptcha;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

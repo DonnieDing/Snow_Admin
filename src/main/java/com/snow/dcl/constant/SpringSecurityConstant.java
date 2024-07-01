@@ -7,15 +7,7 @@ public class SpringSecurityConstant {
     public static final String[] NONE_SECURITY_URL_PATTERNS = {
 
             //前端的
-            "/favicon.ico",
-
-            //swagger相关的
-            "/doc.html",
-            "/webjars/**",
-            "/swagger-resources/**",
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/configuration/security",
+//            "/favicon.ico",
 
     };
 }

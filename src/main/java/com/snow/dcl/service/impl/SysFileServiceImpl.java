@@ -12,17 +12,18 @@ import com.snow.dcl.dao.PoetryContentRepository;
 import com.snow.dcl.dao.SysFileRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.PoetryAuthor;
+import com.snow.dcl.model.PoetryCategory;
 import com.snow.dcl.model.PoetryContent;
 import com.snow.dcl.model.SysFile;
 import com.snow.dcl.model.dto.poetry.TangThreeDto;
 import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.utils.FileUtils;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -99,9 +100,9 @@ public class SysFileServiceImpl implements SysFileService {
 //        // poetryAuthor.setIntroduce("曹操（155年-220年3月15日），字孟德，一名吉利，小字阿瞒，一说本姓夏侯，沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家，东汉末年权臣，亦是曹魏政权的奠基者。");
 //        //
 //        PoetryAuthor author = poetryAuthorRepository.save(poetryAuthor);
-//        PoetryCategory poetryCategory = new PoetryCategory();
-//        poetryCategory.setTitle("全唐诗");
-//        PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
+        PoetryCategory poetryCategory = new PoetryCategory();
+        poetryCategory.setTitle("唐诗三百首");
+        PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
 
 
         String txtFileContent = FileUtils.getTxtFileContentUtf8(path);
@@ -133,19 +134,17 @@ public class SysFileServiceImpl implements SysFileService {
                 authorId = poetryAuthor.getId();
             } else {
                 PoetryAuthor newPoetryAuthor = new PoetryAuthor();
-                newPoetryAuthor.setName(author);
-                System.out.println("库里没有的作者：" + author);
+                newPoetryAuthor.setName("屈原");
                 newPoetryAuthor = poetryAuthorRepository.save(newPoetryAuthor);
                 authorId = newPoetryAuthor.getId();
             }
             poetryContent.setAuthorId(authorId);
-            poetryContent.setCategoryId(3L);
-            String title = ZhConverterUtil.toSimple(tangThreeDto.getTitle());
-            poetryContent.setTitle(title);
+            poetryContent.setCategoryId(category.getId());
+            poetryContent.setTitle(tangThreeDto.getTitle());
             String[] contents = tangThreeDto.getParagraphs();
             String result = "";
             for (String content : contents) {
-                String s = ZhConverterUtil.toSimple(content);
+                String s = ZhConverterUtil.toSimple(content) + "。";
                 result += s;
             }
             poetryContent.setContent(result);

@@ -2,12 +2,10 @@ package com.snow.dcl.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import io.swagger.annotations.ApiModelProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * (功能描述)
@@ -27,22 +25,16 @@ public class SysFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty(value = "真实文件名")
     private String realName;
 
-    @ApiModelProperty(value = "文件名")
     private String name;
 
-    @ApiModelProperty(value = "后缀")
     private String suffix;
 
-    @ApiModelProperty(value = "路径")
     private String path;
 
-    @ApiModelProperty(value = "类型")
     private String type;
 
-    @ApiModelProperty(value = "大小")
     private String size;
 
     public SysFile(String realName,String name, String suffix, String path, String type, String size) {

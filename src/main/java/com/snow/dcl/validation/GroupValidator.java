@@ -1,6 +1,6 @@
 package com.snow.dcl.validation;
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 /**
  * @ClassName GroupValidator
  * (功能描述)

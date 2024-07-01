@@ -15,7 +15,10 @@ import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.BeanCopyUtils;
 import com.snow.dcl.validation.ValidationUtil;
+import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +30,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Resource;
-import javax.persistence.criteria.Predicate;
 import java.util.*;
 
 /**
@@ -48,8 +49,13 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     SysPermissionService sysPermissionService;
 
-    @Resource
+//    @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Lazy
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void save(SysUserDto sysUserDto) {

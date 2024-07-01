@@ -7,7 +7,6 @@
 package com.snow.dcl.service.impl;
 
 import com.snow.dcl.constant.CacheKeyConstant;
-import com.snow.dcl.dao.SysUserRepository;
 import com.snow.dcl.exception.CustomException;
 import com.snow.dcl.model.SysUser;
 import com.snow.dcl.model.dto.system.LoginDto;
@@ -15,6 +14,7 @@ import com.snow.dcl.service.CaptchaService;
 import com.snow.dcl.service.LoginService;
 import com.snow.dcl.utils.JwtUtil;
 import com.snow.dcl.utils.RedisUtils;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -54,9 +53,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private CaptchaService captchaService;
-
-    @Resource
-    private SysUserRepository sysUserRepository;
 
     @Override
     public Map<String, String> login(LoginDto loginDto) {

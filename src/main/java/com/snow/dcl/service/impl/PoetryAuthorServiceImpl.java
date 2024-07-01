@@ -3,6 +3,8 @@ package com.snow.dcl.service.impl;
 import com.snow.dcl.dao.PoetryAuthorRepository;
 import com.snow.dcl.model.PoetryAuthor;
 import com.snow.dcl.service.PoetryAuthorService;
+import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,8 +12,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Resource;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 

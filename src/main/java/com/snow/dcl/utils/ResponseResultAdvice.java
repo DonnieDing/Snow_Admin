@@ -7,6 +7,7 @@
 package com.snow.dcl.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -14,8 +15,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import javax.annotation.Resource;
 
 /**
  * @ClassName ResponesResultAdvice

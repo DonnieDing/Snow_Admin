@@ -8,6 +8,8 @@ package com.snow.dcl.exception;
 
 import com.snow.dcl.utils.HttpCodeEnum;
 import com.snow.dcl.utils.ResponseResult;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,17 +20,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import java.util.stream.Collectors;
 
 /**
+ * @version 1.0.0
  * @ClassName GlobalException
  * (功能描述)
  * 全局异常处理
  * @Author Dcl_Snow
  * @Create 2021/8/24 14:02
- * @version 1.0.0
  */
 @Slf4j
 @RestControllerAdvice

@@ -1,9 +1,9 @@
 package com.snow.dcl.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 /**
  * (功能描述)

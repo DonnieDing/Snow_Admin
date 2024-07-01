@@ -13,15 +13,13 @@ import com.snow.dcl.model.dto.system.SysRoleDto;
 import com.snow.dcl.service.SysRoleService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +32,6 @@ import java.util.Map;
  * @Create 2021/8/27 10:09
  * @Version 1.0.0
  */
-@Api(tags = "角色管理")
 @RestController
 @RequestMapping("/sys/role")
 public class SysRoleController {
@@ -43,7 +40,6 @@ public class SysRoleController {
     SysRoleService sysRoleService;
 
     @SysOperateLog("新增角色")
-    @ApiOperation(value = "新增角色")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('role.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleDto sysRoleDto) {
@@ -52,7 +48,6 @@ public class SysRoleController {
     }
 
     @SysOperateLog("更新角色")
-    @ApiOperation(value = "更新角色")
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('role.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Create.class) @RequestBody SysRoleDto sysRoleDto) {
@@ -65,7 +60,6 @@ public class SysRoleController {
     }
 
     @SysOperateLog("删除角色")
-    @ApiOperation(value = "删除角色")
     @DeleteMapping("/{roleId}")
     @PreAuthorize("hasAuthority('role.remove')")
     public ResponseResult delete(@Validated(value = GroupValidator.Delete.class) @PathVariable Long roleId) {
@@ -74,7 +68,6 @@ public class SysRoleController {
     }
 
     @SysOperateLog("批量删除角色")
-    @ApiOperation(value = "批量删除角色")
     @DeleteMapping("/")
     @PreAuthorize("hasAuthority('role.remove.all')")
     public ResponseResult deleteAll(@Validated(value = GroupValidator.Delete.class) @RequestBody List<Long> roleIds) {
@@ -82,7 +75,6 @@ public class SysRoleController {
         return ResponseResult.success().message("批量删除成功");
     }
 
-    @ApiOperation(value = "根据id查询角色")
     @PostMapping("/{roleId}")
     public ResponseResult queryById(@PathVariable Long roleId) {
         SysRole sysRole = sysRoleService.findOne(roleId);
@@ -92,7 +84,6 @@ public class SysRoleController {
         return ResponseResult.success().data(sysRole);
     }
 
-    @ApiOperation(value = "分页条件查询角色")
     @PostMapping("/{page}/{size}")
     @PreAuthorize("hasAuthority('role.list')")
     public ResponseResult query(@PathVariable Integer page, @PathVariable Integer size, @RequestBody SysRoleDto sysRoleDto) {
@@ -105,7 +96,6 @@ public class SysRoleController {
         return ResponseResult.success().data(hashMap);
     }
 
-    @ApiOperation(value = "根据用户获取角色数据")
     @GetMapping("/toAssign/{userId}")
     public ResponseResult toAssign(@PathVariable Long userId) {
         Map<String, Object> roleMap = sysRoleService.getRolesByUserId(userId);
@@ -113,7 +103,6 @@ public class SysRoleController {
     }
 
     @SysOperateLog("根据用户分配角色")
-    @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
     @PreAuthorize("hasAuthority('user.assign')")
     public ResponseResult doAssign(@RequestBody AssignRoleDto assignRoleDto) {

@@ -7,11 +7,8 @@
 package com.snow.dcl.model.dto.system;
 
 import com.snow.dcl.validation.GroupValidator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * @ClassName SysRoleVo
@@ -21,20 +18,15 @@ import javax.validation.constraints.NotBlank;
  * @Create 2021/8/27 10:12
  * @Version 1.0.0
  */
-@ApiModel(value="SysRoleDto", description="角色参数对象")
 @Data
 public class SysRoleDto {
 
-    @ApiModelProperty(value = "角色id")
     private Long id;
 
-    @ApiModelProperty(value = "角色名称")
     @NotBlank(groups = GroupValidator.Create.class, message = "角色名称不能为空")
     private String roleName;
 
-    @ApiModelProperty(value = "角色码")
     private String roleCode;
 
-    @ApiModelProperty(value = "角色备注")
     private String remark;
 }

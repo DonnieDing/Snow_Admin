@@ -3,12 +3,11 @@ package com.snow.dcl.controller;
 import com.snow.dcl.model.dto.system.WxCodeDto;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.ResponseResult;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @ClassName MinaUserController

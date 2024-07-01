@@ -5,13 +5,15 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.snow.dcl.config.FileConfig;
+import com.snow.dcl.dao.PoetryAuthorRepository;
 import com.snow.dcl.exception.CustomException;
+import com.snow.dcl.model.PoetryAuthor;
 import com.snow.dcl.model.SysLog;
 import com.snow.dcl.service.SysFileService;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.io.*;
 import java.util.Date;
 
@@ -24,10 +26,13 @@ class SnowAdminApplicationTests {
     @Resource
     FileConfig fileConfig;
 
+    @Resource
+    PoetryAuthorRepository poetryAuthorRepository;
+
     @Test
     void contextLoadsPoetry() {
 
-        String filePath = "E:\\githubProj\\chinas_poetry\\self\\poet.tang.6000.json";
+        String filePath = "E:\\chinese-poetry-master\\全唐诗\\唐诗三百首.json";
         sysFileService.analyze(filePath);
 
     }
@@ -35,16 +40,14 @@ class SnowAdminApplicationTests {
     @Test
     void contextLoadsChinese() {
 
-        String original = "嫩刺牽衣細，新條窣草垂。";
-        String result = ZhConverterUtil.toSimple(original);
-        System.out.println(result);
+        String name = "駱賓王";
+        String result = ZhConverterUtil.toSimple(name);
+        PoetryAuthor poetryAuthor = poetryAuthorRepository.findByName(result);
+        System.out.println(poetryAuthor);
+//        String original = "天門喜氣曉氛氳";
+//        String result = ZhConverterUtil.toSimple(original);
+//        System.out.println(result);
 
-    }
-
-    public static void main(String[] args) {
-        String original = "韓王從善";
-        String result = ZhConverterUtil.toSimple(original);
-        System.out.println(result);
     }
 
     @Test

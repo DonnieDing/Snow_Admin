@@ -6,11 +6,8 @@
  */
 package com.snow.dcl.model.dto.system;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * @ClassName LoginVo
@@ -20,23 +17,18 @@ import javax.validation.constraints.NotNull;
  * @Create 2021/11/19 14:11
  * @Version 1.0.0
  */
-@ApiModel(value="LoginDto", description="用户登录参数对象")
 @Data
 public class LoginDto {
 
-    @ApiModelProperty(value = "用户名称")
     @NotNull
     private String username;
 
     @NotNull
-    @ApiModelProperty(value = "用户密码")
     private String password;
 
     @NotNull
-    @ApiModelProperty(value = "验证码Key")
     private String codeKey;
 
     @NotNull
-    @ApiModelProperty(value = "验证码")
     private String captcha;
 }

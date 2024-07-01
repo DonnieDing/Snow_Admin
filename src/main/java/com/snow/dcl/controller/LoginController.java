@@ -15,12 +15,10 @@ import com.snow.dcl.service.SysFileService;
 import com.snow.dcl.service.SysUserService;
 import com.snow.dcl.utils.FileUtils;
 import com.snow.dcl.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.security.Principal;
 import java.util.Map;
 
@@ -32,7 +30,6 @@ import java.util.Map;
  * @Create 2021/11/19 14:13
  * @Version 1.0.0
  */
-@Api(tags = "登录管理")
 @RestController
 @RequestMapping("/user")
 public class LoginController {
@@ -47,14 +44,12 @@ public class LoginController {
     private SysFileService sysFileService;
 
     @SysOperateLog("用户登录")
-    @ApiOperation(value = "用户登录")
     @PostMapping("/login")
     public ResponseResult login(@RequestBody LoginDto loginDto) {
         Map<String, String> map = loginService.login(loginDto);
         return ResponseResult.success().message("登陆成功！").data(map);
     }
 
-    @ApiOperation(value = "获取用户基本信息")
     @GetMapping("/getInfo")
     public ResponseResult getUserInfo(Principal principal) {
 
@@ -68,7 +63,6 @@ public class LoginController {
     }
 
     @SysOperateLog("用户登出")
-    @ApiOperation(value = "用户登出")
     @GetMapping("/logout")
     public ResponseResult logout() {
 
@@ -76,7 +70,6 @@ public class LoginController {
         return ResponseResult.success().message("退出成功！");
     }
 
-    @ApiOperation(value = "展示信息")
     @GetMapping("/index")
     public ResponseResult index() {
 

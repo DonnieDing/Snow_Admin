@@ -14,6 +14,8 @@ import com.snow.dcl.model.SysUserRole;
 import com.snow.dcl.model.dto.system.AssignRoleDto;
 import com.snow.dcl.model.dto.system.SysRoleDto;
 import com.snow.dcl.service.SysRoleService;
+import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Resource;
-import javax.persistence.criteria.Predicate;
 import java.util.*;
 import java.util.stream.Collectors;
 

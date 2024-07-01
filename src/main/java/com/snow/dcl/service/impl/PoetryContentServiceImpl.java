@@ -3,9 +3,8 @@ package com.snow.dcl.service.impl;
 import com.snow.dcl.dao.PoetryContentRepository;
 import com.snow.dcl.model.PoetryContent;
 import com.snow.dcl.service.PoetryContentService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * (功能描述)

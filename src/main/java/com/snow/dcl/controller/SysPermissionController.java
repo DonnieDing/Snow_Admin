@@ -13,13 +13,11 @@ import com.snow.dcl.model.dto.system.SysPermissionDto;
 import com.snow.dcl.service.SysPermissionService;
 import com.snow.dcl.utils.ResponseResult;
 import com.snow.dcl.validation.GroupValidator;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Set;
 
 /**
@@ -30,7 +28,6 @@ import java.util.Set;
  * @Create 2021/8/27 14:57
  * @Version 1.0.0
  */
-@Api(tags = "权限管理")
 @RestController
 @RequestMapping("/sys/permission")
 public class SysPermissionController {
@@ -39,7 +36,6 @@ public class SysPermissionController {
     SysPermissionService sysPermissionService;
 
     @SysOperateLog("新增权限")
-    @ApiOperation(value = "新增权限")
     @PostMapping("/")
     @PreAuthorize("hasAuthority('permission.add')")
     public ResponseResult save(@Validated(value = GroupValidator.Create.class) @RequestBody SysPermissionDto sysPermissionDto) {
@@ -48,7 +44,6 @@ public class SysPermissionController {
     }
 
     @SysOperateLog("删除权限")
-    @ApiOperation(value = "删除权限")
     @DeleteMapping("/{permissionId}")
     @PreAuthorize("hasAuthority('permission.remove')")
     public ResponseResult delete(@PathVariable Long permissionId) {
@@ -57,7 +52,6 @@ public class SysPermissionController {
     }
 
     @SysOperateLog("更新权限")
-    @ApiOperation(value = "更新权限")
     @PutMapping("/")
     @PreAuthorize("hasAuthority('permission.update')")
     public ResponseResult update(@Validated(value = GroupValidator.Update.class) @RequestBody SysPermissionDto permissionVo) {
@@ -65,7 +59,6 @@ public class SysPermissionController {
         return ResponseResult.success().message("更新权限成功");
     }
 
-    @ApiOperation(value = "查询所有权限")
     @GetMapping("/")
     @PreAuthorize("hasAuthority('permission.list')")
     public ResponseResult findAll() {
@@ -73,14 +66,12 @@ public class SysPermissionController {
         return ResponseResult.success().data(permissionAll);
     }
 
-    @ApiOperation(value = "根据角色获取权限")
     @GetMapping("/toAssign/{roleId}")
     public ResponseResult selectPermissionByRole(@PathVariable Long roleId) {
         Set<SysPermission> menuList = sysPermissionService.selectPermissionByRole(roleId);
         return ResponseResult.success().data(menuList);
     }
 
-    @ApiOperation(value = "根据角色分配权限")
     @PostMapping("/doAssign")
     @PreAuthorize("hasAuthority('role.assign')")
     public ResponseResult doAssign(@RequestBody AssignPermissionDto assignPermissionDto) {
@@ -89,7 +80,6 @@ public class SysPermissionController {
     }
 
     @SysOperateLog("更新权限状态")
-    @ApiOperation(value = "更新权限状态")
     @GetMapping("/updateStatus/{id}/{status}")
     public ResponseResult updateStatus(@PathVariable Long id, @PathVariable Integer status) {
         sysPermissionService.updateStatus(id, status);

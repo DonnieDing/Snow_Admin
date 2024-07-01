@@ -6,13 +6,12 @@ import com.snow.dcl.model.dto.system.WxCodeDto;
 import com.snow.dcl.service.LoginService;
 import com.snow.dcl.service.MinaUserService;
 import com.snow.dcl.utils.MinaUtils;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
 
 /**
  * @ClassName MinaUserServiceImpl
