@@ -71,7 +71,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             if (Objects.isNull(cacheToken)) {
                 throw new CustomException("用户未登录！");
             }
-            if (!ObjectUtils.isEmpty(userId) && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (!ObjectUtils.isEmpty(userId) && ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication())) {
                 SysUser sysUser = sysUserService.findOne(userId);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(sysUser, null, sysUser.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 /**
  * (功能描述)
@@ -29,7 +30,7 @@ public class SpringBeanUtil implements ApplicationContextAware {
      * @throws BeansException
      */
     public static Object getBean(String name) throws BeansException {
-        if (applicationContext == null) {
+        if (ObjectUtils.isEmpty(applicationContext)) {
             return new NullPointerException("applicationContext is null");
         }
         return applicationContext.getBean(name);

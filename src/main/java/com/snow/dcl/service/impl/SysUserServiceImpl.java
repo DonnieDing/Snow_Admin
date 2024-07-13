@@ -119,7 +119,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser sysUser = sysUserRepository.findByUsername(username);
-        if (null == sysUser) {
+        if (ObjectUtils.isEmpty(sysUser)) {
             // throw new UsernameNotFoundException(username);
             // 捕获UsernameNotFoundException后，默认的hideUserNotFoundExceptions为true
             // 最终返回的还是新建的BadCredentialsException，信息为:“用户名或密码错误”

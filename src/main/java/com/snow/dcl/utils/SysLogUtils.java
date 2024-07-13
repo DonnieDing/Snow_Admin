@@ -8,6 +8,8 @@ import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import net.dreamlu.mica.ip2region.core.IpInfo;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -62,27 +64,27 @@ public class SysLogUtils {
      * @return {@link String}
      */
     public static String getIp(HttpServletRequest request) {
-        if (request == null) {
+        if (ObjectUtils.isEmpty(request)) {
             return "unknown";
         } else {
             String ip = request.getHeader("x-forwarded-for");
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("Proxy-Client-IP");
             }
 
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("X-Forwarded-For");
             }
 
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("WL-Proxy-Client-IP");
             }
 
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("X-Real-IP");
             }
 
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
             }
 

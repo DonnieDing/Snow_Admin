@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,7 +87,7 @@ public class SysRoleController {
     @PostMapping("/{roleId}")
     public ResponseResult queryById(@PathVariable Long roleId) {
         SysRole sysRole = sysRoleService.findOne(roleId);
-        if (sysRole == null) {
+        if (ObjectUtils.isEmpty(sysRole)) {
             return ResponseResult.fail().message("角色不存在！");
         }
         return ResponseResult.success().data(sysRole);
