@@ -3,6 +3,7 @@ package com.snow.dcl.utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -50,7 +51,7 @@ public class BeanCopyUtils {
         Set<String> emptyNames = new HashSet<String>();
         for(java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null) emptyNames.add(pd.getName());
+            if (ObjectUtils.isEmpty(srcValue)) emptyNames.add(pd.getName());
         }
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @ClassName SecurityUtils
@@ -22,7 +23,7 @@ public class SecurityUtils {
      */
     public static String getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
+        if (ObjectUtils.isEmpty(authentication)) {
             throw new CustomException(HttpStatus.UNAUTHORIZED, "当前登录状态过期");
         }
         if (authentication.getPrincipal() instanceof UserDetails) {

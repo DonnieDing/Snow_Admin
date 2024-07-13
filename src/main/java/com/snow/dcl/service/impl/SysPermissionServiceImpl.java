@@ -58,7 +58,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     @Override
     public void save(SysPermissionDto sysPermissionDto) {
         SysPermission sysPermission;
-        if (sysPermissionDto.getId() == null) {
+        if (ObjectUtils.isEmpty(sysPermissionDto.getId())) {
             sysPermission = new SysPermission();
         } else {
             sysPermission = sysPermissionRepository.getById(sysPermissionDto.getId());
