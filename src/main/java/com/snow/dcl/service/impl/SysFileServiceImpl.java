@@ -1,6 +1,7 @@
 package com.snow.dcl.service.impl;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
@@ -92,7 +93,7 @@ public class SysFileServiceImpl implements SysFileService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public void analyze(String path) {
+    public void analyze(File file) {
 //        PoetryAuthor poetryAuthor = new PoetryAuthor();
 //        poetryAuthor.setName("屈原");
 //        poetryAuthor.setIntroduce("屈原（约公元前340年-公元前278年），芈姓（一作嬭姓），屈氏，名平，字原，又自云名正则，字灵均，出生于楚国丹阳秭归（今湖北宜昌），战国时期楚国诗人、政治家。");
@@ -104,8 +105,8 @@ public class SysFileServiceImpl implements SysFileService {
         poetryCategory.setTitle("唐诗三百首");
         PoetryCategory category = poetryCategoryRepository.save(poetryCategory);
 
-
-        String txtFileContent = FileUtils.getTxtFileContentUtf8(path);
+        String txtFileContent = new FileReader(file).readString();
+//        String txtFileContent = FileUtils.getTxtFileContentUtf8(path);
         //曹操诗集
         // List<CaocaoDto> poetryDtoList = JSON.parseArray(txtFileContent, CaocaoDto.class);
         // for (CaocaoDto caocaoDto : poetryDtoList) {
