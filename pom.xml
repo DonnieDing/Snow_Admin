@@ -144,6 +144,18 @@
             <artifactId>opencc4j</artifactId>
             <version>1.8.0</version>
         </dependency>
+
+        <!-- tika -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-parsers-standard-package</artifactId>
+            <version>2.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>

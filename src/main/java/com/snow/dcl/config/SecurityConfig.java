@@ -64,7 +64,7 @@ public class SecurityConfig {
                     try {
                         authorize
                                 // 放行登录接口
-                                .requestMatchers("/user/login", "/captcha/*", "/user/minaLogin").permitAll()
+                                .requestMatchers("/user/login", "/captcha/*", "/user/minaLogin", "/tika/parse").permitAll()
                                 // 其余的都需要权限校验
                                 .anyRequest().authenticated()
                                 .and()

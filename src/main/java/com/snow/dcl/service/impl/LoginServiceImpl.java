@@ -57,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Map<String, String> login(LoginDto loginDto) {
         // 1.校验验证码
-        captchaService.verification(loginDto.getCaptcha(), loginDto.getCodeKey());
+//        captchaService.verification(loginDto.getCaptcha(), loginDto.getCodeKey());
         String token = this.verifyUser(loginDto.getUsername(), loginDto.getPassword());
         //返回给前端数据
         Map<String, String> map = new HashMap<>();

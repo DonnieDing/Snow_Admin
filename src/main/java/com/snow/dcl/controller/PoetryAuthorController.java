@@ -29,7 +29,7 @@ public class PoetryAuthorController {
         return ResponseResult.success().data(hashMap);
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseResult findOne(@PathVariable Long id) {
         PoetryAuthor poetryAuthor = poetryAuthorService.findById(id);
         return ResponseResult.success().data(poetryAuthor);

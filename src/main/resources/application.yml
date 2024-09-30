@@ -3,7 +3,9 @@ spring:
   profiles:
     # 使用dev开发环境
     active: dev
-
+  servlet:
+    multipart:
+      max-file-size: 50MB
   # 配置Jpa
   jpa:
     # 开启SQL打印（建议开发环境）

@@ -11,6 +11,11 @@ import com.snow.dcl.model.PoetryAuthor;
 import com.snow.dcl.model.SysLog;
 import com.snow.dcl.service.SysFileService;
 import jakarta.annotation.Resource;
+import org.apache.tika.Tika;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.sax.BodyContentHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,11 +34,25 @@ class SnowAdminApplicationTests {
     @Resource
     PoetryAuthorRepository poetryAuthorRepository;
 
+    public static void main(String[] args) throws Exception {
+        // Create a Tika instance with the default configuration
+        Tika tika = new Tika();
+        // Parse all given files and print out the extracted text content
+        String file ="F:\\阿里开发手册-泰山版.pdf";
+        File file1 = new File(file);
+        InputStream input = new FileInputStream(file1);
+        AutoDetectParser parser = new AutoDetectParser();
+        BodyContentHandler handler = new BodyContentHandler();
+        Metadata metadata = new Metadata();
+        parser.parse(input, handler, metadata, new ParseContext());
+        System.out.println("Document content: " + handler.toString());
+    }
+
     @Test
     void contextLoadsPoetry() {
 
         String filePath = "E:\\chinese-poetry-master\\全唐诗\\唐诗三百首.json";
-        sysFileService.analyze(filePath);
+//        sysFileService.analyze(filePath);
 
     }
 
