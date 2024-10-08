@@ -38,13 +38,13 @@ class SnowAdminApplicationTests {
         // Create a Tika instance with the default configuration
         Tika tika = new Tika();
         // Parse all given files and print out the extracted text content
-        String file ="F:\\阿里开发手册-泰山版.pdf";
-        File file1 = new File(file);
-        InputStream input = new FileInputStream(file1);
+//        String file ="F:\\阿里开发手册-泰山版.pdf";
+//        File file1 = new File(file);
+//        InputStream input = new FileInputStream(file1);
         AutoDetectParser parser = new AutoDetectParser();
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
-        parser.parse(input, handler, metadata, new ParseContext());
+//        parser.parse(input, handler, metadata, new ParseContext());
         System.out.println("Document content: " + handler.toString());
     }
 
